@@ -1,28 +1,47 @@
 'use client';
 
 import { useActionState } from 'react';
+import { useEffect, useState } from 'react';
 import { editListingAction } from './actions';
-import { getListingById } from '@/lib/listing-utils';
-import { getSession } from '@/app/(auth)/login/actions';
+import { getListingEditData } from './data';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
-export default async function EditListingPage({ params }: { params: { id: string } }) {
-  const session = await getSession();
-  if (!session) {
-    redirect('/login');
-  }
+export default function EditListingPage({ params }: { params: { id: string } }) {
+  const [listing, setListing] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const listing = await getListingById(parseInt(params.id));
-  if (!listing || listing.seller_id !== session.userId) {
-    redirect('/listings');
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const { listing: fetchedListing, error: fetchError } = await getListingEditData(parseInt(params.id));
+      if (fetchError) {
+        setError(fetchError);
+      } else {
+        setListing(fetchedListing);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, [params.id]);
 
   const [state, formAction] = useActionState(editListingAction, { success: false, message: '' });
 
   if (state.success && state.redirectUrl) {
     window.location.href = state.redirectUrl;
     return null;
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!listing) {
+    return <div>Listing not found.</div>;
   }
 
   return (
