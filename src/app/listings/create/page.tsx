@@ -9,6 +9,11 @@ import Link from 'next/link';
 export default function CreateListingPage() {
   const [state, formAction] = useActionState(createListingAction, { success: false, message: '' });
 
+  if (state.success && state.redirectUrl) {
+    window.location.href = state.redirectUrl;
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Floating Particles Background */}

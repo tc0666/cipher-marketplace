@@ -98,8 +98,12 @@ export async function createListingAction(prevState: any, formData: FormData) {
       is_hidden: validatedData.is_hidden,
     });
 
-    // Redirect to the created listing or dashboard
-    redirect(`/listings/${listingId}`);
+    // Show success toast and redirect to listings page
+    return { 
+      success: true, 
+      message: 'Listing successfully added',
+      redirectUrl: '/listings'
+    };
     
   } catch (error) {
     console.error('Create listing error:', error);
