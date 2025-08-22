@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import db from './db-sqlite';
+import db from './db';
 
 export interface User {
   id: number;

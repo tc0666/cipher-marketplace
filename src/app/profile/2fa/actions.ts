@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { authenticator } from 'otplib';
 import QRCode from 'qrcode';
-import db from '@/lib/db-sqlite';
+import db from '@/lib/db';
 import { getSession } from '@/app/(auth)/login/actions';
 import { verifyPassword } from '@/lib/auth-utils';
 import { revalidatePath } from 'next/cache';

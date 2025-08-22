@@ -1,4 +1,4 @@
-import db from './db-sqlite';
+import db from './db';
 import { z } from 'zod';
 
 // Define the listing schema for validation
@@ -32,6 +32,10 @@ export interface Listing {
 
 // Create a new listing
 export async function createListing(sellerId: number, listingData: ListingData): Promise<number> {
+  if (!db) {
+    throw new Error('Database not available');
+  }
+  
   const {
     title,
     description,
@@ -55,6 +59,10 @@ export async function createListing(sellerId: number, listingData: ListingData):
 
 // Get listing by ID
 export async function getListingById(id: number): Promise<Listing | null> {
+  if (!db) {
+    return null;
+  }
+  
   const result = await db.query(
     `SELECT l.*, u.username as seller_username 
      FROM listings l 
@@ -82,26 +90,44 @@ export async function getListingsBySeller(sellerId: number): Promise<Listing[]> 
 
 // Get all active listings (public view)
 export async function getActiveListings(limit: number = 20, offset: number = 0, category?: string): Promise<Listing[]> {
-  let query = `
-    SELECT l.*, u.username as seller_username 
-    FROM listings l 
-    JOIN users u ON l.seller_id = u.id 
-    WHERE l.status = 'active' 
-      AND l.is_hidden = false
-  `;
+  console.log('getActiveListings called, db:', db, 'typeof db:', typeof db);
   
-  const params: any[] = [];
-  
-  if (category) {
-    query += ` AND l.category = $${params.length + 1}`;
-    params.push(category);
+  if (!db) {
+    console.warn('Database not available, returning empty listings');
+    return [];
   }
   
-  query += ` ORDER BY l.created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
-  params.push(limit, offset);
+  if (typeof db.query !== 'function') {
+    console.error('Database query method not available:', typeof db, Object.keys(db || {}));
+    return [];
+  }
+  
+  try {
+    let query = `
+      SELECT l.*, u.username as seller_username 
+      FROM listings l 
+      JOIN users u ON l.seller_id = u.id 
+      WHERE l.status = 'active' 
+        AND l.is_hidden = false
+    `;
+    
+    const params: any[] = [];
+    
+    if (category) {
+      query += ` AND l.category = $${params.length + 1}`;
+      params.push(category);
+    }
+    
+    query += ` ORDER BY l.created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+    params.push(limit, offset);
 
-  const result = await db.query(query, params);
-  return result.rows as Listing[];
+    const result = await db.query(query, params);
+    return result.rows as Listing[];
+  } catch (error) {
+    console.error('Database connection error:', error);
+    // Return empty array if database is not available
+    return [];
+  }
 }
 
 // Update listing
@@ -145,6 +171,10 @@ export async function deleteListing(id: number, sellerId: number): Promise<boole
 
 // Get categories
 export async function getCategories(): Promise<string[]> {
+  if (!db) {
+    return [];
+  }
+  
   const result = await db.query(
     'SELECT DISTINCT category FROM listings WHERE status = \'active\' ORDER BY category'
   );
@@ -154,13 +184,17 @@ export async function getCategories(): Promise<string[]> {
 
 // Search listings
 export async function searchListings(searchTerm: string, limit: number = 20, offset: number = 0): Promise<Listing[]> {
+  if (!db) {
+    return [];
+  }
+  
   const result = await db.query(
     `SELECT l.*, u.username as seller_username 
      FROM listings l 
      JOIN users u ON l.seller_id = u.id 
      WHERE l.status = 'active' 
        AND l.is_hidden = false 
-       AND (l.title LIKE $1 COLLATE NOCASE OR l.description LIKE $1 COLLATE NOCASE OR l.category LIKE $1 COLLATE NOCASE)
+       AND (l.title ILIKE $1 OR l.description ILIKE $1 OR l.category ILIKE $1)
      ORDER BY l.created_at DESC 
      LIMIT $2 OFFSET $3`,
     [`%${searchTerm}%`, limit, offset]

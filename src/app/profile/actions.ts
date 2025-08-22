@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import db from '@/lib/db-sqlite';
+import db from '@/lib/db';
 import { getSession } from '@/app/(auth)/login/actions';
 import { hashPassword, verifyPassword } from '@/lib/auth-utils';
 import { revalidatePath } from 'next/cache';
