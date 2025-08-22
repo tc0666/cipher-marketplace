@@ -193,30 +193,30 @@ export default function CreateListingPage() {
               <div className="space-y-4">
                 <div className="flex items-center p-4 bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl transition-all duration-300 hover:bg-gray-800/50">
                   <input
-                    id="hidden_listing"
-                    name="hidden_listing"
+                    id="is_hidden"
+                    name="is_hidden"
                     type="checkbox"
                     className="h-5 w-5 text-green-500 focus:ring-green-500/50 border-gray-600 bg-gray-700/50 rounded-lg"
                   />
-                  <label htmlFor="hidden_listing" className="ml-4 block text-sm text-gray-300 font-light">
+                  <label htmlFor="is_hidden" className="ml-4 block text-sm text-gray-300 font-light">
                     Hidden Listing (Only accessible via direct link)
                   </label>
                 </div>
                 
                 <div className="flex items-center p-4 bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-2xl transition-all duration-300 hover:bg-gray-800/50">
                   <input
-                    id="time_locked"
-                    name="time_locked"
+                    id="is_time_locked"
+                    name="is_time_locked"
                     type="checkbox"
                     className="h-5 w-5 text-green-500 focus:ring-green-500/50 border-gray-600 bg-gray-700/50 rounded-lg"
                     onChange={(e) => {
-                      const timeLockOptions = document.getElementById('time_lock_options');
+                      const timeLockOptions = document.getElementById('time-lock-options');
                       if (timeLockOptions) {
                         timeLockOptions.style.display = e.target.checked ? 'block' : 'none';
                       }
                     }}
                   />
-                  <label htmlFor="time_locked" className="ml-4 block text-sm text-gray-300 font-light">
+                  <label htmlFor="is_time_locked" className="ml-4 block text-sm text-gray-300 font-light">
                     Time-Locked Listing (Schedule visibility)
                   </label>
                 </div>

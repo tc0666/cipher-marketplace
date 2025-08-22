@@ -19,8 +19,9 @@ const createListingFormSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   condition: z.string().min(1, 'Condition is required'),
   location: z.string().optional(),
-  is_hidden: z.string().optional().transform(val => val === 'on'),
-  is_time_locked: z.string().optional().transform(val => val === 'on'),
+  // Accept missing checkbox fields gracefully (null -> false)
+  is_hidden: z.preprocess((val) => val === 'on', z.boolean()),
+  is_time_locked: z.preprocess((val) => val === 'on', z.boolean()),
   visible_from: z.string().optional().transform((val) => {
     if (!val) return undefined;
     const date = new Date(val);
