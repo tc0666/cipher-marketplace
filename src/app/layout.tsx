@@ -21,7 +21,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-gray-100 flex flex-col min-h-screen relative overflow-x-hidden`}>
+      <body className={`${inter.className} bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-gray-100 flex flex-col min-h-screen relative overflow-x-hidden`} suppressHydrationWarning={true}>
         {/* Floating particles background */}
         <div className="fixed inset-0 pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full opacity-60 animate-pulse"></div>

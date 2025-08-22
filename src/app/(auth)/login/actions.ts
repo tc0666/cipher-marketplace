@@ -66,7 +66,7 @@ export async function loginUser(prevState: any, formData: FormData) {
       }
 
       // Verify 2FA token
-      const tokenValid = await verify2FAToken(user.two_factor_secret!, token!);
+      const tokenValid = await verify2FAToken(user.id, token!);
       if (!tokenValid) {
         return { 
           success: false, 
@@ -78,7 +78,7 @@ export async function loginUser(prevState: any, formData: FormData) {
     }
 
     // 4. Create session
-    const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+    const session = await getIronSession<SessionData>(await cookies(), sessionOptions);
     session.isLoggedIn = true;
     session.userId = user.id;
     session.username = user.username;
@@ -95,14 +95,14 @@ export async function loginUser(prevState: any, formData: FormData) {
 }
 
 export async function logoutUser() {
-  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+  const session = await getIronSession<SessionData>(await cookies(), sessionOptions);
   session.destroy();
   redirect('/');
 }
 
 export async function getSession(): Promise<SessionData | null> {
   try {
-    const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+    const session = await getIronSession<SessionData>(await cookies(), sessionOptions);
     if (session.isLoggedIn) {
       return session;
     }

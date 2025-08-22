@@ -50,7 +50,7 @@ export async function createListing(sellerId: number, listingData: ListingData):
     [sellerId, title, description, price_xmr, category, condition, location, is_hidden]
   );
 
-  return result.rows[0].id;
+  return (result.rows[0] as any).id;
 }
 
 // Get listing by ID
@@ -63,7 +63,7 @@ export async function getListingById(id: number): Promise<Listing | null> {
     [id]
   );
 
-  return result.rows[0] || null;
+  return (result.rows[0] as Listing) || null;
 }
 
 // Get listings by seller ID
@@ -77,7 +77,7 @@ export async function getListingsBySeller(sellerId: number): Promise<Listing[]> 
     [sellerId]
   );
 
-  return result.rows;
+  return result.rows as Listing[];
 }
 
 // Get all active listings (public view)
@@ -101,7 +101,7 @@ export async function getActiveListings(limit: number = 20, offset: number = 0, 
   params.push(limit, offset);
 
   const result = await db.query(query, params);
-  return result.rows;
+  return result.rows as Listing[];
 }
 
 // Update listing
@@ -130,7 +130,7 @@ export async function updateListing(id: number, sellerId: number, listingData: P
   `;
 
   const result = await db.query(query, values);
-  return result.rowCount > 0;
+  return (result.rowCount || 0) > 0;
 }
 
 // Delete listing
@@ -140,7 +140,7 @@ export async function deleteListing(id: number, sellerId: number): Promise<boole
     [id, sellerId]
   );
 
-  return result.rowCount > 0;
+  return (result.rowCount || 0) > 0;
 }
 
 // Get categories
@@ -149,7 +149,7 @@ export async function getCategories(): Promise<string[]> {
     'SELECT DISTINCT category FROM listings WHERE status = \'active\' ORDER BY category'
   );
 
-  return result.rows.map(row => row.category);
+  return result.rows.map((row: any) => row.category);
 }
 
 // Search listings
@@ -166,5 +166,5 @@ export async function searchListings(searchTerm: string, limit: number = 20, off
     [`%${searchTerm}%`, limit, offset]
   );
 
-  return result.rows;
+  return result.rows as Listing[];
 }

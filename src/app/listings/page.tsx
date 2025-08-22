@@ -9,15 +9,16 @@ interface SearchParams {
 }
 
 interface ListingsPageProps {
-  searchParams?: SearchParams;
+  searchParams?: Promise<SearchParams>;
 }
 
 export default async function ListingsPage({ searchParams }: ListingsPageProps) {
-  const search = searchParams?.search || '';
-  const category = searchParams?.category || '';
-  const page = parseInt(searchParams?.page || '1');
+  const resolvedSearchParams = await searchParams;
+  const search = resolvedSearchParams?.search || '';
+  const category = resolvedSearchParams?.category || '';
+  const currentPage = parseInt(resolvedSearchParams?.page || '1');
   const limit = 15;
-  const offset = (page - 1) * limit;
+  const offset = (currentPage - 1) * limit;
 
   // Get listings based on search/filter
   const listings = search 
@@ -245,20 +246,12 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
                     {/* Image Placeholder */}
                     <div className="lg:w-80 flex-shrink-0">
                       <div className="aspect-video bg-gray-700/50 rounded-2xl flex items-center justify-center border border-gray-600/30">
-                        {listing.images && listing.images.length > 0 ? (
-                          <img 
-                            src={listing.images[0]} 
-                            alt={listing.title}
-                            className="w-full h-full object-cover rounded-2xl"
-                          />
-                        ) : (
                           <div className="text-center">
                             <svg className="w-12 h-12 text-gray-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <p className="text-gray-500 text-sm">No image</p>
                           </div>
-                        )}
                       </div>
                     </div>
                     
@@ -303,7 +296,7 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
                       {/* Footer */}
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div className="flex flex-row items-center gap-4 text-sm text-gray-400">
-                          <span className="font-light">by {listing.seller_username}</span>
+                          <span className="font-light">by {listing.seller_username || 'Unknown'}</span>
                           <span className="font-light">{new Date(listing.created_at).toLocaleDateString()}</span>
                           {listing.location && (
                             <div className="flex items-center font-light">
@@ -358,12 +351,12 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
         {listings.length === limit && (
           <div className="mt-16 flex justify-center">
             <div className="flex items-center space-x-3">
-              {page > 1 && (
+              {currentPage > 1 && (
                 <Link
                   href={`/listings?${new URLSearchParams({ 
                     ...(search && { search }), 
                     ...(category && { category }), 
-                    page: (page - 1).toString() 
+                    page: (currentPage - 1).toString() 
                   }).toString()}`}
                   className="px-6 py-3 bg-gray-900/50 text-white rounded-2xl hover:bg-gray-800/50 transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50 flex items-center space-x-2"
                 >
@@ -375,14 +368,14 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
               )}
               
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-medium bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg">
-                {page}
+                {currentPage}
               </div>
               
               <Link
                 href={`/listings?${new URLSearchParams({ 
                   ...(search && { search }), 
                   ...(category && { category }), 
-                  page: (page + 1).toString() 
+                  page: (currentPage + 1).toString() 
                 }).toString()}`}
                 className="px-6 py-3 bg-gray-900/50 text-white rounded-2xl hover:bg-gray-800/50 transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50 flex items-center space-x-2"
               >

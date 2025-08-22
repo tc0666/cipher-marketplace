@@ -47,7 +47,7 @@ export async function generate2FASetup() {
       return { success: false, message: 'User not found' };
     }
 
-    const user = userResult.rows[0];
+    const user = userResult.rows[0] as any;
     const serviceName = 'Cipher Market';
     const accountName = user.username;
     
@@ -72,7 +72,7 @@ export async function generate2FASetup() {
 }
 
 // Enable 2FA
-export async function enable2FA(formData: FormData) {
+export async function enable2FA(prevState: any, formData: FormData) {
   const session = await getSession();
   
   if (!session) {
@@ -110,7 +110,7 @@ export async function enable2FA(formData: FormData) {
       return { success: false, message: 'User not found' };
     }
 
-    const user = userResult.rows[0];
+    const user = userResult.rows[0] as any;
 
     // Check if 2FA is already enabled
     if (user.two_factor_enabled) {
@@ -146,7 +146,7 @@ export async function enable2FA(formData: FormData) {
 }
 
 // Disable 2FA
-export async function disable2FA(formData: FormData) {
+export async function disable2FA(prevState: any, formData: FormData) {
   const session = await getSession();
   
   if (!session) {
@@ -179,7 +179,7 @@ export async function disable2FA(formData: FormData) {
       return { success: false, message: 'User not found' };
     }
 
-    const user = userResult.rows[0];
+    const user = userResult.rows[0] as any;
 
     // Check if 2FA is enabled
     if (!user.two_factor_enabled) {
@@ -225,11 +225,11 @@ export async function verify2FAToken(userId: number, token: string): Promise<boo
       [userId]
     );
 
-    if (userResult.rows.length === 0 || !userResult.rows[0].two_factor_enabled) {
+    if (userResult.rows.length === 0 || !(userResult.rows[0] as any).two_factor_enabled) {
       return false;
     }
 
-    const user = userResult.rows[0];
+    const user = userResult.rows[0] as any;
     return authenticator.verify({ token, secret: user.two_factor_secret });
   } catch (error) {
     console.error('Error verifying 2FA token:', error);
@@ -256,7 +256,7 @@ export async function generateBackupCodes() {
       return { success: false, message: 'User not found' };
     }
 
-    const user = userResult.rows[0];
+    const user = userResult.rows[0] as any;
     if (!user.two_factor_enabled) {
       return { success: false, message: '2FA must be enabled to generate backup codes' };
     }

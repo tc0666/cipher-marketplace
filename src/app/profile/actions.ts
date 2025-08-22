@@ -28,7 +28,7 @@ export async function getUserProfile(userId: number): Promise<UserProfile | null
       [userId]
     );
     
-    return result.rows[0] || null;
+    return (result.rows[0] as UserProfile) || null;
   } catch (error) {
     console.error('Error fetching user profile:', error);
     return null;
@@ -42,7 +42,7 @@ const profileUpdateSchema = z.object({
 });
 
 // Update user profile
-export async function updateProfile(formData: FormData) {
+export async function updateProfile(prevState: any, formData: FormData) {
   const session = await getSession();
   
   if (!session) {
@@ -108,7 +108,7 @@ const passwordChangeSchema = z.object({
 });
 
 // Change user password
-export async function changePassword(formData: FormData) {
+export async function changePassword(prevState: any, formData: FormData) {
   const session = await getSession();
   
   if (!session) {
@@ -142,7 +142,7 @@ export async function changePassword(formData: FormData) {
       return { success: false, message: 'User not found' };
     }
 
-    const user = userResult.rows[0];
+    const user = userResult.rows[0] as any;
 
     // Verify current password
     const passwordMatch = await verifyPassword(current_password, user.password_hash);
@@ -181,8 +181,8 @@ export async function getUserStats(userId: number) {
     ]);
 
     return {
-      activeListings: parseInt(listingsResult.rows[0]?.count || '0'),
-      completedOrders: parseInt(ordersResult.rows[0]?.count || '0'),
+      activeListings: parseInt((listingsResult.rows[0] as any)?.count || '0'),
+      completedOrders: parseInt((ordersResult.rows[0] as any)?.count || '0'),
       totalEarned: '0.00' // TODO: Calculate from completed orders
     };
   } catch (error) {

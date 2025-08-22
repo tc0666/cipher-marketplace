@@ -95,9 +95,6 @@ export async function createListingAction(prevState: any, formData: FormData) {
       condition: validatedData.condition,
       location: validatedData.location,
       is_hidden: validatedData.is_hidden,
-      is_time_locked: validatedData.is_time_locked,
-      visible_from: validatedData.visible_from,
-      visible_until: validatedData.visible_until,
     });
 
     // Redirect to the created listing or dashboard
