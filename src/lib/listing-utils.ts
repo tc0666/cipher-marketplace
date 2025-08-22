@@ -76,6 +76,9 @@ export async function getListingById(id: number): Promise<Listing | null> {
 
 // Get listings by seller ID
 export async function getListingsBySeller(sellerId: number): Promise<Listing[]> {
+  if (!db) {
+    throw new Error('Database connection not available');
+  }
   const result = await db.query(
     `SELECT l.*, u.username as seller_username 
      FROM listings l 
@@ -148,12 +151,18 @@ export async function updateListing(id: number, sellerId: number, listingData: P
     WHERE id = $${paramCount} AND seller_id = $${paramCount + 1}
   `;
 
+  if (!db) {
+    throw new Error('Database connection not available');
+  }
   const result = await db.query(query, values);
   return (result.rowCount || 0) > 0;
 }
 
 // Delete listing
 export async function deleteListing(id: number, sellerId: number): Promise<boolean> {
+  if (!db) {
+    throw new Error('Database connection not available');
+  }
   const result = await db.query(
     'DELETE FROM listings WHERE id = $1 AND seller_id = $2',
     [id, sellerId]

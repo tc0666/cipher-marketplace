@@ -21,10 +21,16 @@ export async function hashPassword(password: string): Promise<string> {
 }
 
 export async function findUserByUsername(username: string): Promise<User | null> {
+  if (!db) {
+    throw new Error('Database connection not available');
+  }
   const result = await db.query('SELECT * FROM users WHERE username = $1', [username]);
   return (result.rows[0] as User) || null;
 }
 
 export async function createUser(username: string, passwordHash: string) {
+  if (!db) {
+    throw new Error('Database connection not available');
+  }
   await db.query('INSERT INTO users (username, password_hash) VALUES ($1, $2)', [username, passwordHash]);
 }
