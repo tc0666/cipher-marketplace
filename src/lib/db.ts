@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, types } from 'pg';
 import sqliteDb from './db-sqlite';
 
 // This ensures that we only have one instance of the pool across the application.
@@ -8,6 +8,16 @@ declare global {
 }
 
 let db: Pool | typeof sqliteDb | null;
+
+// Configure Postgres type parsers so DECIMAL/NUMERIC and TIMESTAMPTZ come back as JS types
+// 1700 = NUMERIC/DECIMAL, 1184 = TIMESTAMP WITH TIME ZONE
+// This prevents runtime errors like calling toFixed on a string value for price_xmr
+try {
+  types.setTypeParser(1700, (val) => (val === null ? null as any : parseFloat(val)) as any);
+  types.setTypeParser(1184, (val) => (val === null ? null as any : new Date(val)) as any);
+} catch (_) {
+  // noop: in environments without pg types (e.g., SQLite fallback), this has no effect
+}
 
 if (process.env.NODE_ENV === 'production') {
   if (!process.env.POSTGRES_URL) {
