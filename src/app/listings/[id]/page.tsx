@@ -1,9 +1,11 @@
-import { getListingById } from '@/lib/listing-utils';
+import { getListingById, deleteListing } from '@/lib/listing-utils';
 import { getSession } from '@/app/(auth)/login/actions';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { useActionState } from 'react';
 import { ContactSellerForm } from './contact-form';
 import { ImageGallery } from './image-gallery';
+import { deleteListingAction } from './actions';
 
 interface ListingPageProps {
   params: Promise<{
@@ -11,8 +13,45 @@ interface ListingPageProps {
   }>;
 }
 
+async function deleteListingAction(formData: FormData) {
+  'use server';
+  
+  const session = await getSession();
+  if (!session) {
+    return { success: false, message: 'You must be logged in to delete a listing.' };
+  }
+
+  const listingId = formData.get('id') as string;
+  if (!listingId) {
+    return { success: false, message: 'Listing ID is required.' };
+  }
+
+  try {
+    const success = await deleteListing(parseInt(listingId), session.userId);
+    if (!success) {
+      return { success: false, message: 'Failed to delete listing.' };
+    }
+
+    return { 
+      success: true, 
+      message: 'Listing successfully deleted',
+      redirectUrl: '/listings'
+    };
+  } catch (error) {
+    console.error('Delete listing error:', error);
+    return { success: false, message: 'An unexpected error occurred. Please try again.' };
+  }
+}
+
+const [deleteState, deleteFormAction] = useActionState(deleteListingAction, { success: false, message: '' });
+
 export default async function ListingPage({ params }: ListingPageProps) {
   const { id } = await params;
+  
+  if (deleteState.success && deleteState.redirectUrl) {
+    window.location.href = deleteState.redirectUrl;
+    return null;
+  }
   const listingId = parseInt(id);
   
   if (isNaN(listingId)) {
@@ -197,9 +236,15 @@ export default async function ListingPage({ params }: ListingPageProps) {
                     >
                       Edit Listing
                     </Link>
-                    <button className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                      Delete Listing
-                    </button>
+                    <form action={deleteFormAction} className="inline">
+                      <input type="hidden" name="id" value={listing.id} />
+                      <button 
+                        type="submit"
+                        className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                      >
+                        Delete Listing
+                      </button>
+                    </form>
                     {listing.status === 'active' && (
                       <button className="px-6 py-3 bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                         Mark as Sold
