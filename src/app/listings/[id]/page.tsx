@@ -1,6 +1,6 @@
 'use client';
 
-import { getListingById, deleteListing } from '@/lib/listing-utils';
+import { getListingById } from '@/lib/listing-utils';
 import { getSession } from '@/app/(auth)/login/actions';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -15,38 +15,7 @@ interface ListingPageProps {
   }>;
 }
 
-import { deleteListingAction } from './actions';
-
-// Delete form handler
-  
-  const session = await getSession();
-  if (!session) {
-    // Handle unauthorized in client component
-    throw new Error('You must be logged in to delete a listing.');
-  }
-
-  const listingId = formData.get('id') as string;
-  if (!listingId) {
-    return { success: false, message: 'Listing ID is required.' };
-  }
-
-  try {
-    const success = await deleteListing(parseInt(listingId), session.userId);
-    if (!success) {
-      return { success: false, message: 'Failed to delete listing.' };
-    }
-
-    return { 
-      success: true, 
-      message: 'Listing successfully deleted',
-      redirectUrl: '/listings'
-    };
-  } catch (error) {
-    console.error('Delete listing error:', error);
-    return { success: false, message: 'An unexpected error occurred. Please try again.' };
-  }
-}
-
+// Initialize action state for delete operation
 const [deleteState, deleteFormAction] = useActionState(deleteListingAction, { success: false, message: '' });
 
 export default async function ListingPage({ params }: ListingPageProps) {
