@@ -56,183 +56,183 @@ function initializeTables() {
 // Demo listings data
 const demoListings = [
   {
-    title: "Vintage Leather Jacket",
-    description: "Authentic vintage leather jacket from the 1980s. Excellent condition with minimal wear. Perfect for motorcycle enthusiasts or fashion lovers. Size Large.",
-    price_xmr: 0.25,
-    category: "Clothing",
-    condition: "Used - Excellent",
-    location: "New York, NY",
-    status: "active"
-  },
-  {
-    title: "Gaming Laptop - RTX 3070",
-    description: "High-performance gaming laptop with NVIDIA RTX 3070, Intel i7-11800H, 16GB RAM, 1TB SSD. Perfect for gaming and content creation. Barely used, still under warranty.",
-    price_xmr: 1.8,
-    category: "Electronics",
-    condition: "Used - Like New",
-    location: "San Francisco, CA",
-    status: "active"
-  },
-  {
-    title: "Rare Bitcoin Mining Hardware",
-    description: "Antminer S19 Pro 110TH/s Bitcoin miner. Excellent condition, well-maintained. Includes power supply and cables. Great for crypto mining operations.",
-    price_xmr: 2.5,
-    category: "Electronics",
-    condition: "Used - Good",
-    location: "Austin, TX",
-    status: "active"
-  },
-  {
-    title: "Handcrafted Wooden Desk",
-    description: "Beautiful handcrafted oak desk with multiple drawers. Perfect for home office or study. Solid wood construction, no particle board. Dimensions: 60\"W x 30\"D x 30\"H.",
-    price_xmr: 0.8,
-    category: "Furniture",
+    title: "Monero Full Node VPS (1 Month)",
+    description: "Managed VPS pre-configured with a synced Monero full node (pruned). Includes monitoring, automatic updates, and weekly backups. Renewal available.",
+    price_xmr: 0.18,
+    category: "VPS & Hosting",
     condition: "New",
-    location: "Portland, OR",
+    location: "Remote",
     status: "active"
   },
   {
-    title: "Professional Camera Kit",
-    description: "Canon EOS R5 with 24-70mm f/2.8L lens, extra batteries, memory cards, and carrying case. Perfect for professional photography. Low shutter count.",
-    price_xmr: 3.2,
-    category: "Electronics",
-    condition: "Used - Excellent",
-    location: "Los Angeles, CA",
-    status: "active"
-  },
-  {
-    title: "Collectible Vinyl Records",
-    description: "Collection of rare vinyl records from the 70s and 80s. Includes Pink Floyd, Led Zeppelin, and The Beatles. All in excellent condition with original sleeves.",
-    price_xmr: 0.6,
-    category: "Collectibles",
-    condition: "Used - Excellent",
-    location: "Nashville, TN",
-    status: "active"
-  },
-  {
-    title: "Mountain Bike - Trek X-Caliber",
-    description: "Trek X-Caliber 8 mountain bike, size Large. 29\" wheels, 1x12 drivetrain, hydraulic disc brakes. Great for trail riding and cross-country. Well-maintained.",
-    price_xmr: 0.9,
-    category: "Sports",
-    condition: "Used - Good",
-    location: "Denver, CO",
-    status: "active"
-  },
-  {
-    title: "Artisan Coffee Beans",
-    description: "Premium single-origin coffee beans from Ethiopia. Freshly roasted, medium roast with notes of chocolate and citrus. Perfect for espresso or pour-over. 2lb bag.",
-    price_xmr: 0.05,
-    category: "Food & Beverages",
-    condition: "New",
-    location: "Seattle, WA",
-    status: "active"
-  },
-  {
-    title: "Smart Home Security System",
-    description: "Complete smart home security system with 8 cameras, central hub, motion sensors, and mobile app. Easy installation, cloud storage included for 1 year.",
-    price_xmr: 1.2,
-    category: "Electronics",
-    condition: "New",
-    location: "Miami, FL",
-    status: "active"
-  },
-  {
-    title: "Vintage Watch Collection",
-    description: "Collection of 5 vintage watches from the 1960s-1980s. Includes Seiko, Citizen, and Timex. All working condition, some may need minor servicing. Great for collectors.",
-    price_xmr: 0.4,
-    category: "Collectibles",
-    condition: "Used - Good",
-    location: "Chicago, IL",
-    status: "active"
-  },
-  {
-    title: "Electric Guitar - Fender Stratocaster",
-    description: "Classic Fender Stratocaster electric guitar in sunburst finish. Excellent playability, recently set up with new strings. Includes hard case and cable.",
-    price_xmr: 1.1,
-    category: "Musical Instruments",
-    condition: "Used - Excellent",
-    location: "Nashville, TN",
-    status: "active"
-  },
-  {
-    title: "Organic Honey - Raw & Unfiltered",
-    description: "Pure organic honey from local beehives. Raw and unfiltered, retains all natural enzymes and nutrients. Perfect for health-conscious consumers. 1lb jar.",
-    price_xmr: 0.03,
-    category: "Food & Beverages",
-    condition: "New",
-    location: "Vermont",
-    status: "active"
-  },
-  {
-    title: "Yoga Mat & Accessories Set",
-    description: "Premium yoga mat with alignment guides, yoga blocks, strap, and carrying bag. Non-slip surface, eco-friendly materials. Perfect for home practice.",
-    price_xmr: 0.15,
-    category: "Sports",
-    condition: "New",
-    location: "Boulder, CO",
-    status: "active"
-  },
-  {
-    title: "Antique Pocket Watch",
-    description: "Beautiful antique pocket watch from the early 1900s. Gold-plated case, mechanical movement, still keeping accurate time. Comes with original chain.",
-    price_xmr: 0.7,
-    category: "Collectibles",
-    condition: "Used - Good",
-    location: "Boston, MA",
-    status: "active"
-  },
-  {
-    title: "Gaming Chair - Ergonomic Design",
-    description: "High-quality gaming chair with lumbar support, adjustable armrests, and reclining function. Perfect for long gaming sessions or office work.",
-    price_xmr: 0.35,
-    category: "Furniture",
-    condition: "Used - Like New",
-    location: "Phoenix, AZ",
-    status: "active"
-  },
-  {
-    title: "Drone with 4K Camera",
-    description: "Professional drone with 4K camera, 3-axis gimbal, and 30-minute flight time. Includes extra batteries, propellers, and carrying case. Perfect for aerial photography.",
+    title: "Hardware Wallet - Ledger Nano X (Sealed)",
+    description: "Brand new, factory-sealed Ledger Nano X hardware wallet. Purchased from official distributor. Supports XMR via third-party apps.",
     price_xmr: 0.95,
-    category: "Electronics",
-    condition: "Used - Excellent",
-    location: "San Diego, CA",
-    status: "active"
-  },
-  {
-    title: "Handmade Ceramic Dinnerware Set",
-    description: "Beautiful handmade ceramic dinnerware set for 4 people. Includes plates, bowls, and mugs. Dishwasher safe, unique glazed finish. Perfect for special occasions.",
-    price_xmr: 0.2,
-    category: "Home & Garden",
-    condition: "New",
-    location: "Santa Fe, NM",
-    status: "active"
-  },
-  {
-    title: "Cryptocurrency Hardware Wallet",
-    description: "Secure hardware wallet for storing cryptocurrencies offline. Supports multiple currencies including Bitcoin, Ethereum, and Monero. Brand new, sealed package.",
-    price_xmr: 0.12,
     category: "Electronics",
     condition: "New",
     location: "Silicon Valley, CA",
     status: "active"
   },
   {
-    title: "Vintage Comic Book Collection",
-    description: "Collection of vintage comic books from the 1980s and 1990s. Includes Marvel and DC titles. All in protective sleeves, excellent condition for collectors.",
-    price_xmr: 0.45,
-    category: "Collectibles",
+    title: "Cold Storage Metal Backup Kit",
+    description: "Stainless steel seed backup kit with letter tiles. Fire-resistant, corrosion-proof. Includes tamper-evident seals and instructions.",
+    price_xmr: 0.32,
+    category: "Security",
+    condition: "New",
+    location: "Austin, TX",
+    status: "active"
+  },
+  {
+    title: "Raspberry Pi 4 Monero Node Kit",
+    description: "Raspberry Pi 4 (4GB) with 256GB microSD pre-imaged for Monero node, aluminum case, fan, and power supply. Quick-start guide included.",
+    price_xmr: 1.6,
+    category: "Hardware",
+    condition: "Used - Like New",
+    location: "Portland, OR",
+    status: "active"
+  },
+  {
+    title: "PGP Key Signing Service",
+    description: "Identity verification and PGP key signing service. Includes verification call, proof-of-control checks, and published signature on your key.",
+    price_xmr: 0.06,
+    category: "Services",
+    condition: "New",
+    location: "Remote",
+    status: "active"
+  },
+  {
+    title: "Monero Wallet Hardening Session (1h)",
+    description: "One-on-one video session covering best practices for securing your Monero wallet: backups, watch-only, view keys, offline signing.",
+    price_xmr: 0.22,
+    category: "Education",
+    condition: "New",
+    location: "Remote",
+    status: "active"
+  },
+  {
+    title: "ASIC Miner Power Supply (APW7)",
+    description: "Genuine Bitmain APW7 1800W PSU. Cleaned, tested, and stable under load. Includes power cable and 10x PCIe connectors.",
+    price_xmr: 0.58,
+    category: "Mining",
+    condition: "Used - Good",
+    location: "Phoenix, AZ",
+    status: "active"
+  },
+  {
+    title: "Privacy Coins 101 - eBook (PDF)",
+    description: "Beginner-friendly guide to privacy coins with a focus on Monero: transactions, wallets, nodes, and operational security.",
+    price_xmr: 0.03,
+    category: "Education",
+    condition: "New",
+    location: "Remote",
+    status: "active"
+  },
+  {
+    title: "Cryptocurrency Hardware Wallet (Trezor Model T)",
+    description: "Lightly used Trezor Model T in excellent condition. Reset to factory settings. Includes USB-C cable and original box.",
+    price_xmr: 1.15,
+    category: "Electronics",
     condition: "Used - Excellent",
+    location: "Los Angeles, CA",
+    status: "active"
+  },
+  {
+    title: "Monero Sticker Pack (10 pcs)",
+    description: "High-quality vinyl stickers with Monero designs. Waterproof and UV resistant. Great for laptops and gear.",
+    price_xmr: 0.01,
+    category: "Collectibles",
+    condition: "New",
+    location: "Chicago, IL",
+    status: "active"
+  },
+  {
+    title: "GPU Mining Frame (6-GPU)",
+    description: "Aluminum open-air mining frame for up to 6 GPUs. Includes screws, riser mounts, and fans. Some cosmetic wear.",
+    price_xmr: 0.24,
+    category: "Mining",
+    condition: "Used - Good",
+    location: "Denver, CO",
+    status: "active"
+  },
+  {
+    title: "Crypto Tax Spreadsheet Template",
+    description: "Customizable spreadsheet template for tracking cryptocurrency trades, mining income, and expenses. Includes formulas and pivot tables.",
+    price_xmr: 0.04,
+    category: "Software",
+    condition: "New",
+    location: "Remote",
+    status: "active"
+  },
+  {
+    title: "Monero Donation QR Plaque (Laser-engraved)",
+    description: "Laser-engraved acrylic plaque with your Monero address encoded as QR. Great for cafés, booths, or desks. Includes stand.",
+    price_xmr: 0.12,
+    category: "Collectibles",
+    condition: "New",
+    location: "Seattle, WA",
+    status: "active"
+  },
+  {
+    title: "OpSec Review for Crypto Sellers (90m)",
+    description: "Security assessment for online sellers: device hygiene, password managers, 2FA, PGP, wallet segregation, shipping privacy.",
+    price_xmr: 0.45,
+    category: "Services",
+    condition: "New",
+    location: "Remote",
+    status: "active"
+  },
+  {
+    title: "Prepaid Mobile eSIM (Data Only)",
+    description: "Anonymous eSIM with global data plan for 30 days. Great for travel and privacy. Activation instructions included.",
+    price_xmr: 0.17,
+    category: "Telecom",
+    condition: "New",
+    location: "Remote",
+    status: "active"
+  },
+  {
+    title: "USB Rubber Ducky (PenTest Tool)",
+    description: "Original USB Rubber Ducky for authorized testing and education. Ships with case. For legitimate security research only.",
+    price_xmr: 0.39,
+    category: "Security",
+    condition: "Used - Excellent",
+    location: "Boston, MA",
+    status: "active"
+  },
+  {
+    title: "Monero-branded Hoodie",
+    description: "Cozy black hoodie with Monero logo, 320gsm fleece. Sizes S-XL available. Screen-printed locally.",
+    price_xmr: 0.2,
+    category: "Clothing",
+    condition: "New",
     location: "New York, NY",
     status: "active"
   },
   {
-    title: "Professional Espresso Machine",
-    description: "Commercial-grade espresso machine perfect for home use. Dual boiler system, PID temperature control, and steam wand. Recently serviced and calibrated.",
-    price_xmr: 2.1,
-    category: "Appliances",
-    condition: "Used - Good",
-    location: "Portland, OR",
+    title: "Self-Hosted BTC/XMR Pay Button (Source Code)",
+    description: "Lightweight, self-hosted pay button with XMR and BTC support. Includes serverless functions and setup guide. MIT license.",
+    price_xmr: 0.16,
+    category: "Software",
+    condition: "New",
+    location: "Remote",
+    status: "active"
+  },
+  {
+    title: "Portable Faraday Bag (Laptop)",
+    description: "Signal-blocking Faraday bag for 13-15\" laptops and hardware wallets. Blocks WiFi, BT, NFC, GPS, and cellular.",
+    price_xmr: 0.28,
+    category: "Security",
+    condition: "New",
+    location: "San Diego, CA",
+    status: "active"
+  },
+  {
+    title: "Monero OTC Mediation (Per Case)",
+    description: "Trusted third-party mediation for OTC XMR trades. Includes identity verification, escrow coordination, and dispute resolution.",
+    price_xmr: 0.7,
+    category: "Services",
+    condition: "New",
+    location: "Remote",
     status: "active"
   }
 ];
