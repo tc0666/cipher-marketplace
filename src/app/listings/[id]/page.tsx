@@ -1,44 +1,62 @@
 'use client';
 
-import { getListingById } from '@/lib/listing-utils';
-import { getSession } from '@/app/(auth)/login/actions';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { useActionState } from 'react';
 import { ContactSellerForm } from './contact-form';
 import { ImageGallery } from './image-gallery';
 import { deleteListingAction } from './actions';
+import { getListingData } from './page-server';
+import { useEffect, useState } from 'react';
 
 interface ListingPageProps {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 }
 
 // Initialize action state for delete operation
 const [deleteState, deleteFormAction] = useActionState(deleteListingAction, { success: false, message: '' });
 
-export default async function ListingPage({ params }: ListingPageProps) {
-  const { id } = await params;
+export default function ListingPage({ params }: ListingPageProps) {
+  const { id } = params;
+  const [listing, setListing] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getListingData(id);
+        if (!data || !data.listing) {
+          notFound();
+        }
+        setListing(data.listing);
+        setIsOwner(data.isOwner);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching listing:', error);
+        notFound();
+      }
+    }
+    
+    fetchData();
+  }, [id]);
   
   if (deleteState.success && deleteState.redirectUrl) {
     window.location.href = deleteState.redirectUrl;
     return null;
   }
-  const listingId = parseInt(id);
   
-  if (isNaN(listingId)) {
-    notFound();
+  if (loading) {
+    return <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+    </div>;
   }
-
-  const listing = await getListingById(listingId);
   
   if (!listing) {
     notFound();
   }
-
-  const session = await getSession();
-  const isOwner = session?.userId === listing.seller_id;
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
