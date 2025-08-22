@@ -22,6 +22,11 @@ export interface UserProfile {
 
 // Get user profile by ID
 export async function getUserProfile(userId: number): Promise<UserProfile | null> {
+  if (!db) {
+    console.error('Database not available');
+    return null;
+  }
+  
   try {
     const result = await db.query(
       'SELECT id, username, email, pgp_public_key, two_factor_enabled, is_verified_seller, subscription_tier, subscription_expires_at, created_at, updated_at FROM users WHERE id = $1',
@@ -47,6 +52,10 @@ export async function updateProfile(prevState: any, formData: FormData) {
   
   if (!session) {
     return { success: false, message: 'Not authenticated' };
+  }
+
+  if (!db) {
+    return { success: false, message: 'Database not available' };
   }
 
   // Validate form data
@@ -115,6 +124,10 @@ export async function changePassword(prevState: any, formData: FormData) {
     return { success: false, message: 'Not authenticated' };
   }
 
+  if (!db) {
+    return { success: false, message: 'Database not available' };
+  }
+
   // Validate form data
   const parsed = passwordChangeSchema.safeParse({
     current_password: formData.get('current_password'),
@@ -168,6 +181,14 @@ export async function changePassword(prevState: any, formData: FormData) {
 
 // Get user statistics
 export async function getUserStats(userId: number) {
+  if (!db) {
+    return {
+      activeListings: 0,
+      completedOrders: 0,
+      totalEarned: '0.00'
+    };
+  }
+  
   try {
     const [listingsResult, ordersResult] = await Promise.all([
       db.query(

@@ -7,17 +7,15 @@ declare global {
   var pool: Pool | undefined;
 }
 
-let db;
+let db: Pool | typeof sqliteDb | null;
 
 if (process.env.NODE_ENV === 'production') {
-  if (process.env.POSTGRES_URL) {
-    db = new Pool({
-      connectionString: process.env.POSTGRES_URL,
-    });
-  } else {
-    console.error('POSTGRES_URL environment variable is not set');
-    db = null;
+  if (!process.env.POSTGRES_URL) {
+    throw new Error('POSTGRES_URL environment variable is required in production');
   }
+  db = new Pool({
+    connectionString: process.env.POSTGRES_URL,
+  });
 } else {
   if (process.env.POSTGRES_URL) {
     if (!global.pool) {
