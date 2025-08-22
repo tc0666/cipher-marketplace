@@ -77,6 +77,40 @@ export async function initializeDatabase() {
       )
     `);
 
+    // Create orders table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS orders (
+        id SERIAL PRIMARY KEY,
+        listing_id INTEGER NOT NULL REFERENCES listings(id) ON DELETE CASCADE,
+        buyer_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        seller_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        quantity INTEGER NOT NULL DEFAULT 1,
+        total_price_xmr DECIMAL(12, 8) NOT NULL,
+        status VARCHAR(50) DEFAULT 'pending',
+        escrow_address VARCHAR(255),
+        escrow_tx_id VARCHAR(255),
+        shipping_address TEXT,
+        tracking_number VARCHAR(255),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Create messages table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS messages (
+        id SERIAL PRIMARY KEY,
+        order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+        sender_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        recipient_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        encrypted_content TEXT NOT NULL,
+        pgp_encrypted BOOLEAN DEFAULT FALSE,
+        self_destruct_at TIMESTAMP WITH TIME ZONE,
+        is_read BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     // Create update trigger function
     await db.query(`
       CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -99,6 +133,25 @@ export async function initializeDatabase() {
       DROP TRIGGER IF EXISTS update_listings_updated_at ON listings;
       CREATE TRIGGER update_listings_updated_at BEFORE UPDATE ON listings
         FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    `);
+
+    await db.query(`
+      DROP TRIGGER IF EXISTS update_orders_updated_at ON orders;
+      CREATE TRIGGER update_orders_updated_at BEFORE UPDATE ON orders
+        FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    `);
+
+    // Indexes for better performance
+    await db.query(`
+      CREATE INDEX IF NOT EXISTS idx_listings_seller_id ON listings(seller_id);
+      CREATE INDEX IF NOT EXISTS idx_listings_category ON listings(category);
+      CREATE INDEX IF NOT EXISTS idx_listings_status ON listings(status);
+      CREATE INDEX IF NOT EXISTS idx_orders_buyer_id ON orders(buyer_id);
+      CREATE INDEX IF NOT EXISTS idx_orders_seller_id ON orders(seller_id);
+      CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
+      CREATE INDEX IF NOT EXISTS idx_messages_order_id ON messages(order_id);
+      CREATE INDEX IF NOT EXISTS idx_messages_sender_id ON messages(sender_id);
+      CREATE INDEX IF NOT EXISTS idx_messages_recipient_id ON messages(recipient_id);
     `);
 
     console.log('Database tables initialized successfully');
