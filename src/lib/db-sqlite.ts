@@ -10,18 +10,23 @@ declare global {
   var db: Database.Database | undefined;
 }
 
-let database: Database.Database;
+let database: Database.Database | null = null;
 
-if (process.env.NODE_ENV === 'production') {
-  database = new Database(dbPath);
-} else {
+function ensureDatabase(): Database.Database {
+  if (database) return database;
+
+  // In production, this module should not be used. Prevent attempting to open a file on read-only FS.
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('SQLite adapter should not be used in production');
+  }
+
   if (!global.db) {
     global.db = new Database(dbPath);
-    
     // Initialize tables if they don't exist
     initializeTables(global.db);
   }
   database = global.db;
+  return database;
 }
 
 function initializeTables(db: Database.Database) {
@@ -125,13 +130,14 @@ function initializeTables(db: Database.Database) {
 export default {
   query: (text: string, params: any[] = []) => {
     try {
+      const db = ensureDatabase();
       // Convert PostgreSQL-style $1, $2 placeholders to SQLite ? placeholders
       let sqliteQuery = text;
       for (let i = params.length; i >= 1; i--) {
         sqliteQuery = sqliteQuery.replace(new RegExp(`\\$${i}`, 'g'), '?');
       }
 
-      const stmt = database.prepare(sqliteQuery);
+      const stmt = db.prepare(sqliteQuery);
       
       if (sqliteQuery.trim().toUpperCase().startsWith('SELECT')) {
         const rows = stmt.all(...params);
