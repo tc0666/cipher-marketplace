@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import sqliteDb from './db-sqlite';
 
 // This ensures that we only have one instance of the pool across the application.
 
@@ -26,8 +27,8 @@ if (process.env.NODE_ENV === 'production') {
     }
     db = global.pool;
   } else {
-    console.warn('POSTGRES_URL not set, database operations will be disabled');
-    db = null;
+    console.warn('POSTGRES_URL not set, falling back to SQLite for local development');
+    db = sqliteDb;
   }
 }
 

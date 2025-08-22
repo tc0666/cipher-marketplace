@@ -90,15 +90,8 @@ export async function getListingsBySeller(sellerId: number): Promise<Listing[]> 
 
 // Get all active listings (public view)
 export async function getActiveListings(limit: number = 20, offset: number = 0, category?: string): Promise<Listing[]> {
-  console.log('getActiveListings called, db:', db, 'typeof db:', typeof db);
-  
   if (!db) {
     console.warn('Database not available, returning empty listings');
-    return [];
-  }
-  
-  if (typeof db.query !== 'function') {
-    console.error('Database query method not available:', typeof db, Object.keys(db || {}));
     return [];
   }
   

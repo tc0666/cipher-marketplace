@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { authenticator } from 'otplib';
 import QRCode from 'qrcode';
 import db from '@/lib/db';
+import type { Pool } from 'pg';
 import { getSession } from '@/app/(auth)/login/actions';
 import { verifyPassword } from '@/lib/auth-utils';
 import { revalidatePath } from 'next/cache';
@@ -31,6 +32,10 @@ export async function generate2FASetup() {
   
   if (!session) {
     return { success: false, message: 'Not authenticated' };
+  }
+
+  if (!db) {
+    return { success: false, message: 'Database not available' };
   }
 
   try {
@@ -97,6 +102,10 @@ export async function enable2FA(prevState: any, formData: FormData) {
 
   if (!secret) {
     return { success: false, message: 'Invalid setup data' };
+  }
+
+  if (!db) {
+    return { success: false, message: 'Database not available' };
   }
 
   try {
@@ -168,6 +177,10 @@ export async function disable2FA(prevState: any, formData: FormData) {
 
   const { password, token } = parsed.data;
 
+  if (!db) {
+    return { success: false, message: 'Database not available' };
+  }
+
   try {
     // Get current user data
     const userResult = await db.query(
@@ -219,6 +232,10 @@ export async function disable2FA(prevState: any, formData: FormData) {
 
 // Verify 2FA token (for login purposes)
 export async function verify2FAToken(userId: number, token: string): Promise<boolean> {
+  if (!db) {
+    return false;
+  }
+  
   try {
     const userResult = await db.query(
       'SELECT two_factor_secret, two_factor_enabled FROM users WHERE id = $1',
@@ -243,6 +260,10 @@ export async function generateBackupCodes() {
   
   if (!session) {
     return { success: false, message: 'Not authenticated' };
+  }
+
+  if (!db) {
+    return { success: false, message: 'Database not available' };
   }
 
   try {
