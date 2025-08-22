@@ -10,14 +10,12 @@ import { getListingData } from './page-server';
 import { useEffect, useState } from 'react';
 import { Listing } from '@/lib/listing-utils';
 
-// Initialize action state for delete operation
-const [deleteState, deleteFormAction] = useActionState(deleteListingAction, { success: false, message: '' });
-
 export default function ListingPage({ params }: { params: Promise<{ id: string }> }) {
   const [listing, setListing] = useState<Listing | null>(null);
   const [isOwner, setIsOwner] = useState(false);
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState<any>(null);
+  const [deleteState, deleteFormAction] = useActionState(deleteListingAction, { success: false, message: '' });
   
   useEffect(() => {
     async function fetchData() {
@@ -226,6 +224,7 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
                     </Link>
                     <form action={deleteFormAction} method="POST" className="inline">
                       <input type="hidden" name="id" value={listing.id} />
+                      <input type="hidden" name="sellerId" value={listing.seller_id} />
                       <button 
                         type="submit"
                         className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
