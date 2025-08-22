@@ -1,8 +1,8 @@
 'use server';
 import { deleteListing } from '@/lib/listing-utils';
-import { getSession } from '@/lib/session';
+import { getSession } from '@/app/(auth)/login/actions';
 
-export async function deleteListingAction(formData: FormData) {
+export async function deleteListingAction(prevState: any, formData: FormData) { 
   const session = await getSession();
   if (!session?.userId) {
     return { success: false, message: 'Unauthorized' };
