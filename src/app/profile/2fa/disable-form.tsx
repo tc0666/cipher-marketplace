@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { useState, useEffect } from 'react';
 import { disable2FA } from './actions';
 
@@ -9,7 +9,7 @@ interface DisableFormProps {
 }
 
 export function Disable2FAForm({ onDisableComplete }: DisableFormProps) {
-  const [state, formAction] = useFormState(disable2FA, { success: false, message: '' });
+  const [state, formAction] = useActionState(disable2FA, { success: false, message: '' });
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {

@@ -1,13 +1,13 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { createListingAction } from './actions';
 import { getSession } from '@/app/(auth)/login/actions';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 export default function CreateListingPage() {
-  const [state, formAction] = useFormState(createListingAction, { success: false, message: '' });
+  const [state, formAction] = useActionState(createListingAction, { success: false, message: '' });
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { updateProfile, UserProfile } from './actions';
 import { useState } from 'react';
 
@@ -9,7 +9,7 @@ interface ProfileFormProps {
 }
 
 export function ProfileForm({ userProfile }: ProfileFormProps) {
-  const [state, formAction] = useFormState(updateProfile, { success: false, message: '' });
+  const [state, formAction] = useActionState(updateProfile, { success: false, message: '' });
   const [showPgpTextarea, setShowPgpTextarea] = useState(!!userProfile.pgp_public_key);
 
   return (

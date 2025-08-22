@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { useState, useEffect } from 'react';
 import { generate2FASetup, enable2FA } from './actions';
 import Image from 'next/image';
@@ -13,7 +13,7 @@ export function Setup2FAForm({ onSetupComplete }: SetupFormProps) {
   const [setupData, setSetupData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<'generate' | 'verify'>('generate');
-  const [state, formAction] = useFormState(enable2FA, { success: false, message: '' });
+  const [state, formAction] = useActionState(enable2FA, { success: false, message: '' });
   const [showManualEntry, setShowManualEntry] = useState(false);
 
   const handleGenerateSetup = async () => {

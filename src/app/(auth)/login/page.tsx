@@ -1,11 +1,11 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { useState, useEffect } from 'react';
 import { loginUser } from './actions';
 
 export default function LoginPage() {
-  const [state, formAction] = useFormState(loginUser, { success: false, message: '' });
+  const [state, formAction] = useActionState(loginUser, { success: false, message: '' });
   const [requires2FA, setRequires2FA] = useState(false);
   const [savedUsername, setSavedUsername] = useState('');
 

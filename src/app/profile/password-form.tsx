@@ -1,11 +1,11 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { changePassword } from './actions';
 import { useState } from 'react';
 
 export function PasswordChangeForm() {
-  const [state, formAction] = useFormState(changePassword, { success: false, message: '' });
+  const [state, formAction] = useActionState(changePassword, { success: false, message: '' });
   const [showPasswords, setShowPasswords] = useState(false);
 
   return (

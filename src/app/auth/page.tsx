@@ -2,18 +2,19 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { loginUser } from '../(auth)/login/actions';
 import { registerUser } from '../(auth)/register/actions';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const [loginState, loginAction] = useFormState(loginUser, { success: false, message: '' });
-  const [registerState, registerAction] = useFormState(registerUser, { success: false, message: '' });
+  const [loginState, loginAction] = useActionState(loginUser, { success: false, message: '' });
+  const [registerState, registerAction] = useActionState(registerUser, { success: false, message: '' });
   const [requires2FA, setRequires2FA] = useState(false);
   const [savedUsername, setSavedUsername] = useState('');
-
-  // Handle 2FA requirement for login
+  const [hasMounted, setHasMounted] = useState(false);
+ 
+   // Handle 2FA requirement for login
   React.useEffect(() => {
     if (loginState.requires2FA && !requires2FA) {
       setRequires2FA(true);
@@ -21,51 +22,57 @@ export default function AuthPage() {
     }
   }, [loginState.requires2FA, loginState.username, requires2FA]);
 
-  return (
-    <div className="min-h-screen bg-gray-900">
-      {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-xl font-semibold text-gray-100 hover:text-white">
-                Cipher Market
-              </Link>
-            </div>
-            <nav className="flex items-center space-x-4">
-              <Link
-                href="/listings"
-                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Browse Listings
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-md">
-          {/* Tab Switcher */}
+  React.useEffect(() => {
+    setHasMounted(true);
+  }, []);
+ 
+    return (
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Floating Particles Background to match listings */}
+      {/* Render particles only after mount to avoid SSR hydration mismatches */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {hasMounted && Array.from({ length: 50 }).map((_, i) => {
+          const left = Math.random() * 100;
+          const top = Math.random() * 100;
+          const animationDelay = Math.random() * 3;
+          const animationDuration = 2 + Math.random() * 3;
+          return (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
+              style={{
+                left: `${left}%`,
+                top: `${top}%`,
+                animationDelay: `${animationDelay}s`,
+                animationDuration: `${animationDuration}s`,
+              }}
+            />
+          );
+        })}
+      </div>
+ 
+       {/* Main Content */}
+       <div className="relative z-10 flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+         <div className="w-full max-w-md p-10 space-y-8 bg-gray-900/30 backdrop-blur-sm rounded-3xl border border-gray-800/50 shadow-2xl">
+           {/* Tab Switcher */}
           {!requires2FA && (
-            <div className="flex bg-gray-700 rounded-lg p-1 mb-6">
+            <div className="flex bg-gray-800/40 rounded-2xl p-1 mb-2">
               <button
                 onClick={() => setIsLogin(true)}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-light transition-all duration-300 ${
                   isLogin
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-gray-300 hover:text-white'
+                    ? 'bg-gradient-to-r from-green-600/80 to-emerald-600/80 text-white shadow-lg shadow-emerald-900/20 border border-green-500/30'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800/30'
                 }`}
               >
                 Sign In
               </button>
               <button
                 onClick={() => setIsLogin(false)}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-light transition-all duration-300 ${
                   !isLogin
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-gray-300 hover:text-white'
+                    ? 'bg-gradient-to-r from-green-600/80 to-emerald-600/80 text-white shadow-lg shadow-emerald-900/20 border border-green-500/30'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800/30'
                 }`}
               >
                 Sign Up
@@ -74,7 +81,7 @@ export default function AuthPage() {
           )}
 
           {/* Page Title */}
-          <h1 className="text-2xl font-bold text-center text-gray-100">
+          <h1 className="text-3xl font-light text-center text-white tracking-wide">
             {requires2FA
               ? 'Two-Factor Authentication'
               : isLogin
@@ -84,11 +91,11 @@ export default function AuthPage() {
 
           {/* 2FA Notice */}
           {requires2FA && (
-            <div className="bg-blue-900 border border-blue-700 rounded-lg p-4 mb-6">
-              <div className="flex items-center space-x-3">
-                <div className="text-blue-400 text-xl">🔒</div>
+            <div className="bg-blue-900/20 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-6">
+              <div className="flex items-center space-x-4">
+                <div className="text-blue-400 text-2xl">🔒</div>
                 <div>
-                  <p className="text-blue-100 text-sm">
+                  <p className="text-blue-200/80 text-sm font-light leading-relaxed">
                     Please enter the 6-digit verification code from your authenticator app.
                   </p>
                 </div>
@@ -98,9 +105,9 @@ export default function AuthPage() {
 
           {/* Login Form */}
           {(isLogin || requires2FA) && (
-            <form action={loginAction} className="space-y-6">
+            <form action={loginAction} className="space-y-8">
               <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="username" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
                   Username
                 </label>
                 <input
@@ -110,7 +117,7 @@ export default function AuthPage() {
                   required
                   defaultValue={savedUsername}
                   readOnly={requires2FA}
-                  className={`w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${
+                  className={`w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light ${
                     requires2FA ? 'opacity-75' : ''
                   }`}
                 />
@@ -118,7 +125,7 @@ export default function AuthPage() {
 
               {!requires2FA && (
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                  <label htmlFor="password" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
                     Password
                   </label>
                   <input
@@ -126,14 +133,14 @@ export default function AuthPage() {
                     name="password"
                     type="password"
                     required
-                    className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light"
                   />
                 </div>
               )}
 
               {requires2FA && (
                 <div>
-                  <label htmlFor="token" className="block text-sm font-medium text-gray-300">
+                  <label htmlFor="token" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
                     Verification Code
                   </label>
                   <input
@@ -144,7 +151,7 @@ export default function AuthPage() {
                     maxLength={6}
                     pattern="[0-9]{6}"
                     placeholder="000000"
-                    className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-center text-lg tracking-widest"
+                    className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light text-center text-lg tracking-widest"
                   />
                 </div>
               )}
@@ -157,14 +164,14 @@ export default function AuthPage() {
                       setRequires2FA(false);
                       setSavedUsername('');
                     }}
-                    className="text-sm text-indigo-400 hover:text-indigo-300"
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-300"
                   >
                     ← Back to Login
                   </button>
                 )}
                 <button
                   type="submit"
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                  className="w-full px-6 py-3 text-sm font-light text-white bg-gradient-to-r from-green-600/80 to-emerald-600/80 backdrop-blur-sm border border-green-500/30 hover:from-green-500/80 hover:to-emerald-500/80 hover:border-green-400/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300"
                 >
                   {requires2FA ? 'Verify' : 'Sign In'}
                 </button>
@@ -174,8 +181,8 @@ export default function AuthPage() {
                 <div
                   className={`p-3 rounded-md text-sm ${
                     loginState.success
-                      ? 'bg-green-900 border border-green-700 text-green-100'
-                      : 'bg-red-900 border border-red-700 text-red-100'
+                      ? 'bg-green-900/20 border border-green-700/40 text-green-200'
+                      : 'bg-red-900/20 border border-red-700/40 text-red-200'
                   }`}
                 >
                   {loginState.message}
@@ -186,9 +193,9 @@ export default function AuthPage() {
 
           {/* Register Form */}
           {!isLogin && !requires2FA && (
-            <form action={registerAction} className="space-y-6">
+            <form action={registerAction} className="space-y-8">
               <div>
-                <label htmlFor="reg-username" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="reg-username" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
                   Username
                 </label>
                 <input
@@ -196,11 +203,11 @@ export default function AuthPage() {
                   name="username"
                   type="text"
                   required
-                  className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light"
                 />
               </div>
               <div>
-                <label htmlFor="reg-password" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="reg-password" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
                   Password
                 </label>
                 <input
@@ -208,11 +215,11 @@ export default function AuthPage() {
                   name="password"
                   type="password"
                   required
-                  className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light"
                 />
               </div>
               <div>
-                <label htmlFor="reg-confirm-password" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="reg-confirm-password" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
                   Confirm Password
                 </label>
                 <input
@@ -220,13 +227,13 @@ export default function AuthPage() {
                   name="confirm-password"
                   type="password"
                   required
-                  className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light"
                 />
               </div>
               <div>
                 <button
                   type="submit"
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                  className="w-full px-6 py-3 text-sm font-light text-white bg-gradient-to-r from-green-600/80 to-emerald-600/80 backdrop-blur-sm border border-green-500/30 hover:from-green-500/80 hover:to-emerald-500/80 hover:border-green-400/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300"
                 >
                   Create Account
                 </button>
@@ -236,8 +243,8 @@ export default function AuthPage() {
                 <div
                   className={`p-3 rounded-md text-sm ${
                     registerState.success
-                      ? 'bg-green-900 border border-green-700 text-green-100'
-                      : 'bg-red-900 border border-red-700 text-red-100'
+                      ? 'bg-green-900/20 border border-green-700/40 text-green-200'
+                      : 'bg-red-900/20 border border-red-700/40 text-red-200'
                   }`}
                 >
                   {registerState.message}

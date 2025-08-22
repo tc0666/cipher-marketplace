@@ -1,10 +1,10 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { registerUser } from './actions';
 
 export default function RegisterPage() {
-  const [state, formAction] = useFormState(registerUser, { success: false, message: '' });
+  const [state, formAction] = useActionState(registerUser, { success: false, message: '' });
 
   return (
     <>
