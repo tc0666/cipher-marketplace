@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 const [deleteState, deleteFormAction] = useActionState(deleteListingAction, { success: false, message: '' });
 
 export default function ListingPage({ params }: { params: Promise<{ id: string }> }) {
-  const [listing, setListing] = useState(null);
+  const [listing, setListing] = useState<Listing | null>(null);
   const [isOwner, setIsOwner] = useState(false);
   const [loading, setLoading] = useState(true);
   
