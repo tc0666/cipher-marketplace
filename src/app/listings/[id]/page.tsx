@@ -15,8 +15,9 @@ interface ListingPageProps {
   }>;
 }
 
-async function deleteListingAction(formData: FormData) {
-  'use server';
+import { deleteListingAction } from './actions';
+
+// Delete form handler
   
   const session = await getSession();
   if (!session) {
@@ -238,7 +239,7 @@ export default async function ListingPage({ params }: ListingPageProps) {
                     >
                       Edit Listing
                     </Link>
-                    <form action={deleteFormAction} className="inline">
+                    <form action={deleteListingAction} method="POST" className="inline">
                       <input type="hidden" name="id" value={listing.id} />
                       <button 
                         type="submit"
