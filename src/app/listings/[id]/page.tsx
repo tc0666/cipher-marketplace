@@ -17,6 +17,7 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
   const [listing, setListing] = useState<Listing | null>(null);
   const [isOwner, setIsOwner] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState<any>(null);
   
   useEffect(() => {
     async function fetchData() {
@@ -28,6 +29,7 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
         }
         setListing(data.listing);
         setIsOwner(data.isOwner);
+        setSession(data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching listing:', error);
