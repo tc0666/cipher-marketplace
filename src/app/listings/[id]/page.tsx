@@ -8,6 +8,7 @@ import { ImageGallery } from './image-gallery';
 import { deleteListingAction } from './actions';
 import { getListingData } from './page-server';
 import { useEffect, useState } from 'react';
+import { Listing } from '@/lib/listing-utils';
 
 // Initialize action state for delete operation
 const [deleteState, deleteFormAction] = useActionState(deleteListingAction, { success: false, message: '' });
