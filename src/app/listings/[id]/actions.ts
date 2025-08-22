@@ -8,9 +8,14 @@ export async function deleteListingAction(prevState: any, formData: FormData) {
     return { success: false, message: 'Unauthorized' };
   }
 
-  const listingId = formData.get('id')?.toString();
-  if (!listingId) {
+  const listingIdStr = formData.get('id')?.toString();
+  if (!listingIdStr) {
     return { success: false, message: 'Missing listing ID' };
+  }
+
+  const listingId = parseInt(listingIdStr, 10);
+  if (isNaN(listingId)) {
+    return { success: false, message: 'Invalid listing ID' };
   }
 
   try {
