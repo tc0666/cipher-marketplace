@@ -1,3 +1,5 @@
+'use client';
+
 import { getListingById, deleteListing } from '@/lib/listing-utils';
 import { getSession } from '@/app/(auth)/login/actions';
 import Link from 'next/link';
