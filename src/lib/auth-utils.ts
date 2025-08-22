@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import db from './db';
 
+// Auth utilities for user management - Updated for Vercel deployment
+
 export interface User {
   id: number;
   username: string;
