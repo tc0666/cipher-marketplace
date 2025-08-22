@@ -222,7 +222,7 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
                     >
                       Edit Listing
                     </Link>
-                    <form action={deleteListingAction} method="POST" className="inline">
+                    <form action={deleteFormAction} method="POST" className="inline">
                       <input type="hidden" name="id" value={listing.id} />
                       <button 
                         type="submit"
