@@ -7,14 +7,18 @@ import { getListingEditData } from './data';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
-export default function EditListingPage({ params }: { params: { id: string } }) {
+export default function EditListingPage({ params }: { params: Promise<{ id: string }> }) {
   const [listing, setListing] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [listingId, setListingId] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
-      const { listing: fetchedListing, error: fetchError } = await getListingEditData(parseInt(params.id));
+      const resolvedParams = await params;
+      const id = resolvedParams.id;
+      setListingId(id);
+      const { listing: fetchedListing, error: fetchError } = await getListingEditData(parseInt(id));
       if (fetchError) {
         setError(fetchError);
       } else {
@@ -23,7 +27,7 @@ export default function EditListingPage({ params }: { params: { id: string } }) 
       setLoading(false);
     };
     fetchData();
-  }, [params.id]);
+  }, [params]);
 
   const [state, formAction] = useActionState(editListingAction, { success: false, message: '' });
 
@@ -68,7 +72,7 @@ export default function EditListingPage({ params }: { params: { id: string } }) 
           <h1 className="text-4xl font-light text-white mb-8 tracking-wide">Edit Listing</h1>
           
           <form action={formAction} className="space-y-8">
-            <input type="hidden" name="id" value={params.id} />
+            <input type="hidden" name="id" value={listingId} />
             
             {/* Title */}
             <div>
@@ -209,7 +213,7 @@ export default function EditListingPage({ params }: { params: { id: string } }) 
             {/* Form Actions */}
             <div className="flex justify-end space-x-4 pt-6">
               <Link 
-                href={`/listings/${params.id}`}
+                href={`/listings/${listingId}`}
                 className="px-6 py-3 bg-gray-700/50 hover:bg-gray-700/70 text-white rounded-2xl font-medium transition-all duration-300"
               >
                 Cancel

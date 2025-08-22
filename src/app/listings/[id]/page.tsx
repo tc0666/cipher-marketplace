@@ -9,17 +9,10 @@ import { deleteListingAction } from './actions';
 import { getListingData } from './page-server';
 import { useEffect, useState } from 'react';
 
-interface ListingPageProps {
-  params: {
-    id: string;
-  };
-}
-
 // Initialize action state for delete operation
 const [deleteState, deleteFormAction] = useActionState(deleteListingAction, { success: false, message: '' });
 
-export default function ListingPage({ params }: ListingPageProps) {
-  const { id } = params;
+export default function ListingPage({ params }: { params: Promise<{ id: string }> }) {
   const [listing, setListing] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -27,7 +20,8 @@ export default function ListingPage({ params }: ListingPageProps) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getListingData(id);
+        const resolvedParams = await params;
+        const data = await getListingData(resolvedParams.id);
         if (!data || !data.listing) {
           notFound();
         }
@@ -41,7 +35,7 @@ export default function ListingPage({ params }: ListingPageProps) {
     }
     
     fetchData();
-  }, [id]);
+  }, [params]);
   
   if (deleteState.success && deleteState.redirectUrl) {
     window.location.href = deleteState.redirectUrl;
