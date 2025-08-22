@@ -21,7 +21,8 @@ import { deleteListingAction } from './actions';
   
   const session = await getSession();
   if (!session) {
-    return { success: false, message: 'You must be logged in to delete a listing.' };
+    // Handle unauthorized in client component
+    throw new Error('You must be logged in to delete a listing.');
   }
 
   const listingId = formData.get('id') as string;
