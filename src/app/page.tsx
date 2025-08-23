@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import { getActiveListings } from '@/lib/listing-utils'
 import FeaturedCarousel from '@/components/FeaturedCarousel'
+import { getSession } from '@/app/(auth)/login/actions'
 
 export default async function Home() {
   const listings = await getActiveListings(6) // Get 6 listings for 2 slides of 3 each
+  const session = await getSession()
   
   return (
     <div className="bg-black">
@@ -70,13 +72,15 @@ export default async function Home() {
                 <span className="relative z-10">Explore Marketplace</span>
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white to-gray-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </Link>
-              <Link
-                href="/auth"
-                className="group relative px-10 py-4 border border-white/20 text-white font-medium rounded-full hover:border-white/40 hover:bg-white/5 transition-all duration-500 text-lg overflow-hidden"
-              >
-                <span className="relative z-10">Get Started</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-              </Link>
+              {!session && (
+                <Link
+                  href="/auth"
+                  className="group relative px-10 py-4 border border-white/20 text-white font-medium rounded-full hover:border-white/40 hover:bg-white/5 transition-all duration-500 text-lg overflow-hidden"
+                >
+                  <span className="relative z-10">Get Started</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                </Link>
+              )}
             </div>
           </div>
           
