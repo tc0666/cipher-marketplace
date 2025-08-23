@@ -241,20 +241,8 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
           {listings.length > 0 ? (
             <div className="space-y-6">
               {listings.map((listing) => (
-                <div key={listing.id} className="group bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:shadow-2xl hover:shadow-white/5">
-                  <div className="flex flex-col lg:flex-row gap-8">
-                    {/* Image Placeholder */}
-                    <div className="lg:w-80 flex-shrink-0">
-                      <div className="aspect-video bg-gray-700/50 rounded-2xl flex items-center justify-center border border-gray-600/30">
-                          <div className="text-center">
-                            <svg className="w-12 h-12 text-gray-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <p className="text-gray-500 text-sm">No image</p>
-                          </div>
-                      </div>
-                    </div>
-                    
+                <div key={listing.id} className="group bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm rounded-3xl p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:shadow-2xl hover:shadow-white/5">
+                  <div className="flex flex-col">
                     {/* Content */}
                     <div className="flex-1 flex flex-col">
                       {/* Header */}
