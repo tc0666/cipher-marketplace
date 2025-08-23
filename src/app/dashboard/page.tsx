@@ -30,20 +30,16 @@ export default async function DashboardPage() {
         ))}
       </div>
       
-      {/* Hero Section */}
-      <div className="relative z-10 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-left">
-            <h1 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-wide">
-              Welcome back, <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent font-medium">{session.username}</span>
-            </h1>
-            <p className="text-xl text-gray-300 font-light max-w-2xl leading-relaxed mb-8">Your secure marketplace command center</p>
-          </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Page Header */}
+        <div className="text-left mb-16">
+          <h1 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-wide">
+            Welcome back, <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent font-medium">{session.username}</span>
+          </h1>
+          <p className="text-xl text-gray-300 font-light max-w-2xl leading-relaxed">
+            Your secure marketplace command center
+          </p>
         </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div className="bg-gray-900/30 backdrop-blur-sm border border-gray-800/50 rounded-3xl p-8 hover:border-green-500/30 transition-all duration-300">
