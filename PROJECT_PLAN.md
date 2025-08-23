@@ -47,7 +47,6 @@ This document outlines the development plan for **Monero Marketplace**, a secure
 -   **[✅] Loading States and Skeleton Components**
 -   **[✅] Price Formatting (3 decimal places for XMR)**
 -   **[✅] Description Truncation and Excerpts**
--   **[✅] Optimized Layout for Listing Details Page**
 
 ### 🚧 Milestone 4: Payment Integration & Orders (IN PROGRESS)
 -   **[ ] Monero Wallet Integration**
@@ -55,15 +54,14 @@ This document outlines the development plan for **Monero Marketplace**, a secure
 -   **[ ] Order Placement System**
 -   **[ ] Payment Verification**
 -   **[ ] Order Status Tracking**
--   **[✅] Buyer-Seller Communication**
+-   **[ ] Buyer-Seller Communication**
 
-### 🚧 Milestone 5: Advanced Features (IN PROGRESS)
+### 📋 Milestone 5: Advanced Features (PLANNED)
 -   **[ ] Escrow System Implementation**
 -   **[ ] Seller Verification System**
 -   **[ ] Advanced Search with Elasticsearch**
--   **[✅] Image Upload for Listings**
--   **[✅] Rating & Review System**
--   **[✅] Database Fallback System (SQLite/PostgreSQL)**
+-   **[ ] Image Upload for Listings**
+-   **[ ] Rating & Review System**
 -   **[ ] Dispute Resolution System**
 
 ### 📋 Milestone 6: Security & Privacy (PLANNED)
@@ -83,22 +81,15 @@ This document outlines the development plan for **Monero Marketplace**, a secure
 - **Dashboard**: Seller dashboard for managing listings
 - **Demo Data**: Populated marketplace with sample listings for testing
 - **Responsive Design**: Mobile-first approach with optimized layouts
-- **Image Gallery**: Support for multiple images per listing with gallery view
-- **Review System**: Purchaser-only review system with star ratings and comments
-- **Consistent Typography**: Unified font styling across all pages with bold hero section
-- **Contact Seller**: Direct messaging system between buyers and sellers
-- **Database Fallback**: Automatic fallback between PostgreSQL and SQLite for improved reliability
-- **Optimized Listing Details**: Enhanced layout with logical information hierarchy
 
 ### 🔄 In Development
 - **Payment Integration**: Monero wallet connectivity and transaction processing
 - **Order System**: Complete order flow from placement to fulfillment
-- **Escrow System**: Secure payment holding until order completion
 
 ### 📋 Planned Features
+- **Escrow System**: Secure payment holding until order completion
 - **Advanced Security**: 2FA, PGP integration, enhanced privacy controls
 - **Seller Tools**: Verification, analytics, bulk operations
-- **Dispute Resolution**: System for handling transaction disputes
 
 ## 5. Technical Architecture
 
@@ -107,21 +98,19 @@ This document outlines the development plan for **Monero Marketplace**, a secure
 - **Listings Table**: Product information with XMR pricing
 - **Categories Table**: Organized product categorization
 - **Sessions Table**: Secure session management
-- **Reviews Table**: User reviews and ratings for listings
 
 ### Security Features
 - **Secure Cookies**: HttpOnly, Secure, SameSite protection
 - **Session Management**: Server-side session validation
 - **Input Validation**: Comprehensive form validation and sanitization
 - **SQL Injection Protection**: Parameterized queries throughout
-- **Database Redundancy**: Fallback between PostgreSQL and SQLite
 
 ## 6. Next Steps
 
-1. **Monero Wallet Integration**: Implement wallet connectivity for XMR transactions
-2. **Order Management System**: Build complete order workflow from placement to fulfillment
-3. **Escrow Service**: Develop secure payment holding system for transaction safety
-4. **Seller Verification**: Create a verification system for trusted sellers
-5. **Dispute Resolution**: Implement a system for handling transaction disputes
-6. **Enhanced Security**: Add 2FA and additional privacy features
+1. **Monero Integration**: Implement wallet connectivity and payment processing
+2. **Order System**: Build complete order management workflow
+3. **Image Uploads**: Add product image support with secure storage
+4. **Enhanced Security**: Implement 2FA and additional privacy features
+5. **Performance Optimization**: Database indexing and query optimization
+6. **Testing**: Comprehensive test suite for all features
 

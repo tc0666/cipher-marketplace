@@ -21,19 +21,11 @@ try {
 
 if (process.env.NODE_ENV === 'production') {
   if (!process.env.POSTGRES_URL) {
-    console.warn('POSTGRES_URL environment variable not set in production, falling back to SQLite');
-    db = sqliteDb;
-  } else {
-    // Configure for Neon serverless PostgreSQL on Vercel
-    db = new Pool({
-      connectionString: process.env.POSTGRES_URL,
-      ssl: {
-        rejectUnauthorized: false // Required for Neon database connections
-      },
-      max: 10, // Adjust connection pool size for serverless environment
-      idleTimeoutMillis: 30000
-    });
+    throw new Error('POSTGRES_URL environment variable is required in production');
   }
+  db = new Pool({
+    connectionString: process.env.POSTGRES_URL,
+  });
 } else {
   if (process.env.POSTGRES_URL) {
     if (!global.pool) {
@@ -47,9 +39,6 @@ if (process.env.NODE_ENV === 'production') {
     db = sqliteDb;
   }
 }
-
-// Export the database instance
-export { db };
 
 // Initialize database tables
 export async function initializeDatabase() {
