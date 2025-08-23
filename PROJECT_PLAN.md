@@ -56,12 +56,12 @@ This document outlines the development plan for **Monero Marketplace**, a secure
 -   **[ ] Order Status Tracking**
 -   **[ ] Buyer-Seller Communication**
 
-### 📋 Milestone 5: Advanced Features (PLANNED)
+### 🚧 Milestone 5: Advanced Features (IN PROGRESS)
 -   **[ ] Escrow System Implementation**
 -   **[ ] Seller Verification System**
 -   **[ ] Advanced Search with Elasticsearch**
--   **[ ] Image Upload for Listings**
--   **[ ] Rating & Review System**
+-   **[✅] Image Upload for Listings**
+-   **[✅] Rating & Review System**
 -   **[ ] Dispute Resolution System**
 
 ### 📋 Milestone 6: Security & Privacy (PLANNED)
@@ -81,6 +81,10 @@ This document outlines the development plan for **Monero Marketplace**, a secure
 - **Dashboard**: Seller dashboard for managing listings
 - **Demo Data**: Populated marketplace with sample listings for testing
 - **Responsive Design**: Mobile-first approach with optimized layouts
+- **Image Gallery**: Support for multiple images per listing with gallery view
+- **Review System**: Purchaser-only review system with star ratings and comments
+- **Consistent Typography**: Unified font styling across all pages with bold hero section
+- **Contact Seller**: Direct messaging system between buyers and sellers
 
 ### 🔄 In Development
 - **Payment Integration**: Monero wallet connectivity and transaction processing

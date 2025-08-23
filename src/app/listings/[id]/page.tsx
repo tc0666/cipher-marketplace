@@ -5,10 +5,10 @@ import { notFound } from 'next/navigation';
 import { useActionState } from 'react';
 import { ContactSellerForm } from './contact-form';
 import { ImageGallery } from './image-gallery';
-import { deleteListingAction } from './actions';
-import { getListingData } from './page-server';
+import { deleteListingAction, getListingData } from './actions';
 import { useEffect, useState } from 'react';
 import { Listing } from '@/lib/listing-utils';
+import { Reviews } from './reviews';
 
 export default function ListingPage({ params }: { params: Promise<{ id: string }> }) {
   const [listing, setListing] = useState<Listing | null>(null);
@@ -22,10 +22,10 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
       try {
         const resolvedParams = await params;
         const data = await getListingData(resolvedParams.id);
-        if (!data || !data.listing) {
+        if (!data) {
           notFound();
         }
-        setListing(data.listing);
+        setListing(data);
         setIsOwner(data.isOwner);
         setSession(data);
         setLoading(false);
@@ -171,7 +171,7 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
                   <p className="text-gray-300 whitespace-pre-wrap leading-relaxed font-light text-lg">{listing.description}</p>
                 </div>
               </div>
-
+              
               {/* Additional Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
@@ -210,6 +210,14 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
                   </div>
                 </div>
               </div>
+              
+              {/* Reviews Section */}
+              <Reviews 
+                listingId={listing.id} 
+                reviews={listing.reviews || []} 
+                userHasPurchased={listing.userHasPurchased || false}
+                currentUserId={session?.user?.id}
+              />
 
               {/* Owner Actions */}
               {isOwner && (
@@ -222,7 +230,7 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
                     >
                       Edit Listing
                     </Link>
-                    <form action={deleteFormAction} method="POST" className="inline">
+                    <form action={deleteFormAction} className="inline">
                       <input type="hidden" name="id" value={listing.id} />
                       <input type="hidden" name="sellerId" value={listing.seller_id} />
                       <button 
