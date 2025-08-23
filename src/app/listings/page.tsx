@@ -58,8 +58,8 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
         
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Sidebar - Filters */}
-          <aside className="lg:w-80 flex-shrink-0">
-            <div className="bg-gray-900/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-800/50 sticky top-8">
+          <aside className="lg:w-80 flex-shrink-0 sticky top-24 self-start">
+            <div className="bg-gray-900/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-800/50 max-h-[calc(100vh-8rem)] overflow-y-auto">
               <h2 className="text-2xl font-medium text-white mb-8 tracking-wide">Filters</h2>
               
               <form method="GET" className="space-y-8">
