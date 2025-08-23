@@ -5,6 +5,7 @@ import { createListingAction } from './actions';
 import { getSession } from '@/app/(auth)/login/actions';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import ParticlesBackground from '@/components/ParticlesBackground';
 
 export default function CreateListingPage() {
   const [state, formAction] = useActionState(createListingAction, { success: false, message: '' });
@@ -17,28 +18,15 @@ export default function CreateListingPage() {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Floating Particles Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 3}s`
-            }}
-          />
-        ))}
-      </div>
+      <ParticlesBackground count={50} />
 
       {/* Main Content */}
-      <main className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-gray-900/30 backdrop-blur-sm rounded-3xl p-10 border border-gray-800/50">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-gray-900/60 backdrop-blur-md rounded-3xl p-10 border border-gray-800/50 hover:border-gray-700/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-emerald-900/10">
           <h1 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-wide">
             Create <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent font-medium">New Listing</span>
           </h1>
-          <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed mb-8">
+          <p className="text-xl text-gray-300 font-light max-w-2xl leading-relaxed mb-8">
             Add your product or service to our secure marketplace
           </p>
           
@@ -66,7 +54,7 @@ export default function CreateListingPage() {
           <form action={formAction} className="space-y-8">
             {/* Title */}
             <div>
-              <label htmlFor="title" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
+              <label htmlFor="title" className="block text-sm font-medium text-emerald-400 mb-3 tracking-wide">
                 Title *
               </label>
               <input
@@ -74,14 +62,14 @@ export default function CreateListingPage() {
                 name="title"
                 type="text"
                 required
-                className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light"
+                className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 font-light shadow-inner shadow-black/20"
                 placeholder="Enter a descriptive title for your listing"
               />
             </div>
 
             {/* Description */}
             <div>
-              <label htmlFor="description" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
+              <label htmlFor="description" className="block text-sm font-medium text-emerald-400 mb-3 tracking-wide">
                 Description *
               </label>
               <textarea
@@ -89,73 +77,69 @@ export default function CreateListingPage() {
                 name="description"
                 rows={6}
                 required
-                className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light resize-none"
+                className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 font-light resize-none shadow-inner shadow-black/20"
                 placeholder="Provide a detailed description of your item..."
               />
             </div>
 
             {/* Image Upload */}
             <div>
-              <label htmlFor="images" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
+              <label htmlFor="images" className="block text-sm font-medium text-emerald-400 mb-3 tracking-wide">
                 Images (Optional)
               </label>
-              <div className="border-2 border-dashed border-gray-700/50 rounded-2xl p-8 bg-gray-800/30 backdrop-blur-sm hover:border-gray-600/50 transition-all duration-300">
-                <div className="text-center">
-                  <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+              <div className="border-2 border-dashed border-gray-700/50 rounded-2xl p-8 text-center hover:border-emerald-500/30 transition-all duration-300 bg-gray-800/30 backdrop-blur-sm">
+                <div className="flex justify-center mb-4">
+                  <svg className="w-12 h-12 text-emerald-400/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <div className="flex text-sm text-gray-400 font-light">
-                    <label htmlFor="images" className="relative cursor-pointer bg-gray-700/50 rounded-xl px-4 py-2 font-medium text-green-400 hover:text-green-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-green-500/50 transition-all duration-300">
-                      <span>Upload images</span>
-                      <input id="images" name="images" type="file" className="sr-only" multiple accept="image/*" />
-                    </label>
-                    <p className="pl-2 py-2">or drag and drop</p>
-                  </div>
-                  <p className="text-xs text-gray-500 font-light mt-2">PNG, JPG, GIF up to 10MB each (max 5 images)</p>
                 </div>
+                <button
+                  type="button"
+                  className="px-6 py-2 bg-gradient-to-r from-emerald-600/80 to-green-600/80 text-white rounded-xl border border-emerald-500/30 hover:from-emerald-500/80 hover:to-green-500/80 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg hover:shadow-emerald-500/10"
+                >
+                  Upload Images
+                </button>
+                <p className="text-xs text-gray-400 mt-4 font-light">
+                  PNG, JPG, GIF up to 10MB each (max 5 images)
+                </p>
               </div>
             </div>
 
             {/* Price and Category Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <label htmlFor="price_xmr" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
+                <label htmlFor="price" className="block text-sm font-medium text-emerald-400 mb-3 tracking-wide">
                   Price (XMR) *
                 </label>
                 <input
-                  id="price_xmr"
-                  name="price_xmr"
+                  id="price"
+                  name="price"
                   type="number"
                   step="0.00000001"
                   min="0"
                   required
-                  className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light"
+                  className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 font-light shadow-inner shadow-black/20"
                   placeholder="0.00000000"
                 />
               </div>
 
               <div>
-                <label htmlFor="category" className="block text-sm font-light text-gray-300 mb-3 tracking-wide">
+                <label htmlFor="category" className="block text-sm font-medium text-emerald-400 mb-3 tracking-wide">
                   Category *
                 </label>
                 <select
-                  id="category"
-                  name="category"
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light"
-                >
-                  <option value="">Select a category</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Books">Books</option>
-                  <option value="Clothing">Clothing</option>
-                  <option value="Home & Garden">Home & Garden</option>
-                  <option value="Sports & Outdoors">Sports & Outdoors</option>
-                  <option value="Collectibles">Collectibles</option>
-                  <option value="Art & Crafts">Art & Crafts</option>
-                  <option value="Digital Goods">Digital Goods</option>
-                  <option value="Services">Services</option>
-                  <option value="Other">Other</option>
-                </select>
+                id="category"
+                name="category"
+                required
+                defaultValue=""
+                className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 font-light shadow-inner shadow-black/20"
+              >
+                <option value="" disabled>Select a category</option>
+                <option value="digital">Digital Goods</option>
+                <option value="physical">Physical Goods</option>
+                <option value="services">Services</option>
+                <option value="other">Other</option>
+              </select>
               </div>
             </div>
 
@@ -166,20 +150,20 @@ export default function CreateListingPage() {
                   Condition *
                 </label>
                 <select
-                  id="condition"
-                  name="condition"
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 font-light"
-                >
-                  <option value="">Select condition</option>
-                  <option value="New">New</option>
-                  <option value="Like New">Like New</option>
-                  <option value="Very Good">Very Good</option>
-                  <option value="Good">Good</option>
-                  <option value="Fair">Fair</option>
-                  <option value="Poor">Poor</option>
-                  <option value="Digital">Digital</option>
-                </select>
+                id="condition"
+                name="condition"
+                required
+                defaultValue=""
+                className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all duration-300 font-light shadow-inner shadow-black/20"
+              >
+                <option value="" disabled>Select condition</option>
+                <option value="new">New</option>
+                <option value="like_new">Like New</option>
+                <option value="good">Good</option>
+                <option value="fair">Fair</option>
+                <option value="poor">Poor</option>
+                <option value="na">Not Applicable</option>
+              </select>
               </div>
 
               <div>
@@ -275,7 +259,7 @@ export default function CreateListingPage() {
               </Link>
               <button
                 type="submit"
-                className="px-8 py-3 text-sm font-light text-white bg-gradient-to-r from-green-600/80 to-emerald-600/80 backdrop-blur-sm border border-green-500/30 hover:from-green-500/80 hover:to-emerald-500/80 hover:border-green-400/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all duration-300 tracking-wide shadow-lg shadow-green-500/20"
+                className="px-8 py-3 text-sm font-light text-white bg-gradient-to-r from-emerald-600/80 to-green-600/80 backdrop-blur-sm border border-green-500/30 hover:from-emerald-500/80 hover:to-green-500/80 hover:border-green-400/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all duration-300 tracking-wide shadow-lg shadow-green-500/20"
               >
                 Create Listing
               </button>
