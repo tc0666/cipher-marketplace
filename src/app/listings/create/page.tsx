@@ -35,7 +35,12 @@ export default function CreateListingPage() {
       {/* Main Content */}
       <main className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-gray-900/30 backdrop-blur-sm rounded-3xl p-10 border border-gray-800/50">
-          <h1 className="text-4xl font-light text-white mb-8 tracking-wide">Create New Listing</h1>
+          <h1 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-wide">
+            Create <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent font-medium">New Listing</span>
+          </h1>
+          <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed mb-8">
+            Add your product or service to our secure marketplace
+          </p>
           
           {/* Legal Disclaimer */}
           <div className="bg-orange-900/20 backdrop-blur-sm border border-orange-500/30 rounded-2xl p-6 mb-8">

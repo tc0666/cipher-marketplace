@@ -53,8 +53,10 @@ export default async function ProfilePage() {
                 </span>
               </div>
               <div>
-                <h1 className="text-2xl font-light text-white tracking-wide">{userProfile.username}</h1>
-                <p className="text-gray-400 font-light">Member since {new Date(userProfile.created_at).toLocaleDateString()}</p>
+                <h1 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-wide">
+                  <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent font-medium">{userProfile.username}</span>
+                </h1>
+                <p className="text-xl text-gray-300 font-light leading-relaxed">Member since {new Date(userProfile.created_at).toLocaleDateString()}</p>
                 <div className="flex items-center space-x-4 mt-2">
                   <span className={`px-3 py-1 rounded-xl text-xs font-light backdrop-blur-sm ${
                     userProfile.is_verified_seller 

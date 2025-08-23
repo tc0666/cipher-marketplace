@@ -49,10 +49,10 @@ export default async function Home() {
           
           <div className="relative max-w-6xl mx-auto px-6 text-center z-10">
             <div className="animate-fade-in-up">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-light text-white mb-8 tracking-tight">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tight">
                 Private.
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300 animate-gradient">Secure.</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300 animate-gradient font-bold">Secure.</span>
                 <br />
                 Simple.
               </h1>
