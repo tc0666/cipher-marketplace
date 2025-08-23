@@ -28,7 +28,7 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
   const categories = await getCategories();
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-black relative">
       {/* Floating Particles Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(50)].map((_, i) => (
@@ -57,10 +57,10 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
         </div>
         
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left Sidebar - Filters */}
-          <aside className="lg:w-80 flex-shrink-0 sticky top-24 self-start">
-            <div className="bg-gray-900/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-800/50 max-h-[calc(100vh-8rem)] overflow-y-auto">
-              <h2 className="text-2xl font-medium text-white mb-8 tracking-wide">Filters</h2>
+            {/* Left Sidebar - Filters */}
+            <aside className="lg:w-80 flex-shrink-0 sticky top-[100px] self-start">
+              <div className="bg-gray-900/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-800/50 overflow-y-auto max-h-[calc(100vh-120px)]">
+                <h2 className="text-2xl font-medium text-white mb-8 tracking-wide">Filters</h2>
               
               <form method="GET" className="space-y-8">
                 {/* Search Input */}
