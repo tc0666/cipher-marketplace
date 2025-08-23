@@ -215,8 +215,8 @@ export default function ListingPage({ params }: { params: Promise<{ id: string }
               <Reviews 
                 listingId={listing.id} 
                 reviews={listing.reviews || []} 
-                userHasPurchased={listing.userHasPurchased || false}
-                currentUserId={session?.user?.id}
+                hasPurchased={listing.userHasPurchased || false}
+                userId={session?.user?.id}
               />
 
               {/* Owner Actions */}
