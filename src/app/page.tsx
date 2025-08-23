@@ -81,7 +81,7 @@ export default async function Home() {
               </Link>
               {!session && (
                 <Link
-                  href="/auth"
+                  href="/login"
                   className="group relative px-10 py-4 border border-emerald-500/30 text-white font-medium rounded-full hover:border-emerald-500/60 hover:bg-emerald-500/5 transition-all duration-500 text-lg overflow-hidden"
                 >
                   <span className="relative z-10 font-semibold">Get Started</span>
@@ -332,12 +332,14 @@ export default async function Home() {
             <h2 className="text-4xl md:text-5xl font-light text-white mb-8 tracking-tight">Start Trading</h2>
             <p className="text-xl text-gray-400 mb-12 font-light leading-relaxed max-w-2xl mx-auto">Experience the future of private commerce</p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link
-                href="/auth/register"
-                className="group px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-white/20"
-              >
-                <span className="relative z-10">Get Started</span>
-              </Link>
+              {!session && (
+                <Link
+                  href="/auth"
+                  className="group px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-white/20"
+                >
+                  <span className="relative z-10">Get Started</span>
+                </Link>
+              )}
               <Link
                 href="/listings"
                 className="group relative px-8 py-4 text-gray-400 hover:text-white font-medium transition-all duration-500 overflow-hidden border border-white/20 rounded-full hover:border-white/40 hover:bg-white/5"
