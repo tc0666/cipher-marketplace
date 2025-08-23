@@ -1,116 +1,77 @@
-# Monero Marketplace Project Plan
+# Cipher Market Project Plan
 
 ## 1. Project Overview
 
-This document outlines the development plan for **Monero Marketplace**, a secure, privacy-first online marketplace using Monero (XMR). The platform is built with a focus on user anonymity and data security, featuring a modern React-based frontend with server-side rendering and secure session management.
+This document outlines the development plan for **Cipher Market**, a secure, privacy-first online marketplace using Monero (XMR). The platform is built with a focus on user anonymity and data security, featuring a modern React-based frontend with server-side rendering and secure session management.
 
-**Current Status:** The marketplace is in active development with core functionality implemented including user authentication, listing management, and a fully functional marketplace interface.
+**Current Status:** The marketplace has core functionality implemented including user authentication, listing management, and a marketplace interface.
 
 ## 2. Technology Stack
 
--   **Framework:** Next.js 14 (App Router)
+-   **Framework:** Next.js (App Router)
 -   **Language:** TypeScript
 -   **Styling:** Tailwind CSS (Dark Mode by default)
--   **Database:** SQLite (for development and production)
--   **Authentication:** Custom session-based authentication with secure cookies
--   **Deployment:** Local development environment
+-   **Database:** SQLite
+-   **Authentication:** NextAuth and custom session-based authentication
 -   **UI Components:** Custom React components with modern design patterns
 
 ## 3. Development Milestones
 
-### ✅ Milestone 1: Core Foundation & Authentication (COMPLETED)
--   **[✅] Initial Project Setup**
--   **[✅] User Registration System (UI & Server Actions)**
--   **[✅] Secure User Login & Session Management**
--   **[✅] Session Persistence & Cookie Security**
--   **[✅] Dark Mode Default Theme**
--   **[✅] Responsive Design Implementation**
--   **[✅] Database Schema & SQLite Integration**
+### ✅ Milestone 1: Core Foundation & Privacy Features
+- **[✅] Initial Project Setup**
+- **[✅] User Registration (UI & Server Action)**
+- **[✅] Secure User Login & Session Management**
+- **[✅] Dark Mode Default Theme**
+- **[✅] Responsive Design Implementation**
+- **[ ] Two-Factor Authentication (2FA) via TOTP**
+- **[ ] PGP-Only Communication Option for Sellers**
+- **[ ] Self-Destruct Messaging System**
 
-### ✅ Milestone 2: Marketplace Core Features (COMPLETED)
--   **[✅] Product Listing Management (Full CRUD)**
--   **[✅] Marketplace Homepage with Featured Listings**
--   **[✅] Dedicated Listings Page with Advanced Filtering**
--   **[✅] Search Functionality (by title, description, category)**
--   **[✅] Category-based Filtering System**
--   **[✅] Price Range Filtering**
--   **[✅] Seller Dashboard for Listing Management**
--   **[✅] Individual Listing Detail Pages**
--   **[✅] Demo Data Population for Testing**
+### 🚧 Milestone 2: Listings & Seller Features
+- **[✅] Product Listing Management (CRUD)**
+- **[✅] Marketplace Homepage with Featured Listings**
+- **[ ] Time-Locked Listings (Scheduled visibility)**
+- **[ ] Hidden Listings (Accessible by direct link only)**
+- **[ ] Seller Verification Toggle**
 
-### ✅ Milestone 3: UI/UX Enhancement (COMPLETED)
--   **[✅] Modern Card-based Design System**
--   **[✅] High-end Gradient Styling**
--   **[✅] Responsive Grid Layouts (3-column for listings)**
--   **[✅] Optimized Homepage (8 featured listings)**
--   **[✅] Sidebar Navigation for Filters**
--   **[✅] Loading States and Skeleton Components**
--   **[✅] Price Formatting (3 decimal places for XMR)**
--   **[✅] Description Truncation and Excerpts**
-
-### 🚧 Milestone 4: Payment Integration & Orders (IN PROGRESS)
--   **[ ] Monero Wallet Integration**
--   **[ ] XMR Price Calculation & Display**
--   **[ ] Order Placement System**
--   **[ ] Payment Verification**
--   **[ ] Order Status Tracking**
--   **[ ] Buyer-Seller Communication**
-
-### 📋 Milestone 5: Advanced Features (PLANNED)
--   **[ ] Escrow System Implementation**
--   **[ ] Seller Verification System**
--   **[ ] Advanced Search with Elasticsearch**
--   **[ ] Image Upload for Listings**
--   **[ ] Rating & Review System**
--   **[ ] Dispute Resolution System**
-
-### 📋 Milestone 6: Security & Privacy (PLANNED)
--   **[ ] Two-Factor Authentication (2FA)**
--   **[ ] PGP Communication Integration**
--   **[ ] Enhanced Privacy Controls**
--   **[ ] Audit Logging**
--   **[ ] Security Hardening**
+### 📋 Milestone 3: Orders, Payments & Escrow
+- **[ ] Monero Wallet Integration**
+- **[ ] Order Placement System**
+- **[ ] Payment Verification**
+- **[ ] Escrow System Implementation**
+- **[ ] Dispute Resolution System**
 
 ## 4. Current Features
 
 ### ✅ Implemented Features
-- **User Authentication**: Complete registration and login system with secure session management
-- **Marketplace Interface**: Modern, responsive design with card-based layouts
-- **Listing Management**: Full CRUD operations for product listings
-- **Search & Filter**: Advanced filtering by category, price range, and text search
-- **Dashboard**: Seller dashboard for managing listings
-- **Demo Data**: Populated marketplace with sample listings for testing
-- **Responsive Design**: Mobile-first approach with optimized layouts
+- **User Authentication**: Registration and login system with NextAuth and secure session management
+- **Marketplace Interface**: Modern design with dark mode
+- **Listing Management**: Basic operations for product listings
 
 ### 🔄 In Development
-- **Payment Integration**: Monero wallet connectivity and transaction processing
-- **Order System**: Complete order flow from placement to fulfillment
-
-### 📋 Planned Features
-- **Escrow System**: Secure payment holding until order completion
-- **Advanced Security**: 2FA, PGP integration, enhanced privacy controls
-- **Seller Tools**: Verification, analytics, bulk operations
+- **Payment Integration**: Monero wallet connectivity
+- **Enhanced Security**: 2FA implementation
+- **Messaging System**: Secure communication between buyers and sellers
 
 ## 5. Technical Architecture
 
 ### Database Schema
 - **Users Table**: User authentication and profile data
 - **Listings Table**: Product information with XMR pricing
-- **Categories Table**: Organized product categorization
-- **Sessions Table**: Secure session management
+- **Wallet Addresses**: Monero wallet addresses for transactions
+- **Transactions**: Payment records and verification data
 
 ### Security Features
-- **Secure Cookies**: HttpOnly, Secure, SameSite protection
-- **Session Management**: Server-side session validation
-- **Input Validation**: Comprehensive form validation and sanitization
-- **SQL Injection Protection**: Parameterized queries throughout
+- **NextAuth Integration**: Secure authentication with JWT
+- **Input Validation**: Form validation with Zod
+- **Route Protection**: Middleware-based access control
+- **Two-Factor Authentication**: TOTP implementation (planned)
 
 ## 6. Next Steps
 
-1. **Monero Integration**: Implement wallet connectivity and payment processing
-2. **Order System**: Build complete order management workflow
-3. **Image Uploads**: Add product image support with secure storage
-4. **Enhanced Security**: Implement 2FA and additional privacy features
-5. **Performance Optimization**: Database indexing and query optimization
-6. **Testing**: Comprehensive test suite for all features
+1. **Complete 2FA Implementation**: Enhance security with TOTP authentication
+2. **Monero Wallet Integration**: Connect to Monero RPC for transactions
+3. **Messaging System**: Implement secure buyer-seller communication
+4. **Escrow System**: Develop secure payment holding mechanism
+5. **UI Refinement**: Polish user interface and experience
 
