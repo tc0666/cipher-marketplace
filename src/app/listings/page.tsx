@@ -47,11 +47,11 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Page Header */}
-        <div className="text-center mb-16">
+        <div className="text-left mb-16">
           <h1 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-wide">
             Browse <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent font-medium">Listings</span>
           </h1>
-          <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-300 font-light max-w-2xl leading-relaxed">
             Discover unique items and services in our secure marketplace
           </p>
         </div>

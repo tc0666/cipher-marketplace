@@ -33,11 +33,11 @@ export default async function DashboardPage() {
       {/* Hero Section */}
       <div className="relative z-10 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-left">
             <h1 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-wide">
               Welcome back, <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent font-medium">{session.username}</span>
             </h1>
-            <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed mb-8">Your secure marketplace command center</p>
+            <p className="text-xl text-gray-300 font-light max-w-2xl leading-relaxed mb-8">Your secure marketplace command center</p>
           </div>
         </div>
       </div>

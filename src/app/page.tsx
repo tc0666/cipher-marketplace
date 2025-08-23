@@ -81,7 +81,7 @@ export default async function Home() {
               </Link>
               {!session && (
                 <Link
-                  href="/login"
+                  href="/auth"
                   className="group relative px-10 py-4 border border-emerald-500/30 text-white font-medium rounded-full hover:border-emerald-500/60 hover:bg-emerald-500/5 transition-all duration-500 text-lg overflow-hidden"
                 >
                   <span className="relative z-10 font-semibold">Get Started</span>
