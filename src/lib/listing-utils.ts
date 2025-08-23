@@ -28,6 +28,8 @@ export interface Listing {
   created_at: Date;
   updated_at: Date;
   seller_username?: string;
+  reviews?: any[];
+  userHasPurchased?: boolean;
 }
 
 // Create a new listing
